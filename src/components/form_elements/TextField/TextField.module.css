@@ -1,0 +1,18 @@
+.textField {
+  width: 309px;
+  height: 81px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.textField input {
+  width: 309px;
+  height: 56px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  font-size: var(--input-font-size);
+}
+.textField label{
+    font-size: var(--label-font-size);
+}
