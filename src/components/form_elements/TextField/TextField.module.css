@@ -4,6 +4,12 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: white;
+}
+.description{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 .textField input {
   width: 309px;
@@ -12,7 +18,15 @@
   border: 1px solid var(--border-color);
   padding: 20px;
   font-size: var(--input-font-size);
+  outline: none;
+}
+.textField input:active, .textField input:focus{
+    border: 1px solid var(--brown-1);
+    /* outline: 1px solid var(--brown-1); */
 }
 .textField label{
     font-size: var(--label-font-size);
+}
+.textField small{
+    color: var(--error);
 }

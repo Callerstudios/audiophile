@@ -20,6 +20,8 @@
   --label-font-size: 12px;
   --input-font-size: 14px;
 
+  --error: #CD2C2C;
+
 }
 *{
   padding: 0;

@@ -1,0 +1,55 @@
+.radioContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 309px;
+  height:56px;
+  user-select: none;
+}
+
+.radioContainer:hover {
+  border-color: #d87d4a; /* hover color */
+}
+
+.radioInput {
+  display: none;
+}
+
+.customCircle {
+  height: 20px;
+  width: 20px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.radioContainer.active {
+  border-color: var(--brown-1);
+}
+
+.radioContainer.active .customCircle {
+  border-color: var(--brown-1);
+}
+
+.radioContainer.active .customCircle::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 10px;
+  height: 10px;
+  background-color: var(--brown-1);
+  border-radius: 50%;
+}
+
+.label {
+  font-weight: 600;
+  color: var(--black-1);
+}
