@@ -1,19 +1,19 @@
-import { useState } from "react";
+import { BrowserRouter, useRoutes } from "react-router-dom";
 import "./App.css";
-import CustomRadio from "./components/form_elements/CustomRadio/CustomRadio";
-import TextField from "./components/form_elements/TextField/TextField";
-import NumberSelector from "./components/form_elements/NumberSelector/NumberSelector";
-import { useQuery } from "convex/react";
-import {api} from "../convex/_generated/api"
+import routes from "./routes";
+
+const RoutesWrapper = ()=>{
+  return (
+    useRoutes(routes)
+  )
+}
 
 function App() {
-  const [radioValue, setRadioValue] = useState("");
-  const [quantity, setQuantity] = useState(1);
-  const tasks = useQuery(api.tasks.get)
+  // const tasks = useQuery(api.tasks.get)
   return (
     <>
-    {tasks ? tasks.map((t)=>t.text):"No Tasks"}
-      <TextField
+    {/* {tasks ? tasks.map((t)=>t.text):"No Tasks"} */}
+      {/* <TextField
         label="Name"
         onChange={() => {}}
         placeholder="Insert your name"
@@ -32,7 +32,10 @@ function App() {
       />
       <div>
         <NumberSelector value={quantity} onChange={setQuantity} />
-      </div>
+      </div> */}
+      <BrowserRouter>
+      <RoutesWrapper/>
+      </BrowserRouter>
     </>
   );
 }
