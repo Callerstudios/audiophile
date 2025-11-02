@@ -1,27 +1,44 @@
-import NavBar from "../components/NavBar"
-import ProductDetail from "../components/ProductDetail"
-import database from "../db.json"
+import AudioGear from "../components/AudioGear";
+import Footer from "../components/Footer";
+import NavBar from "../components/NavBar";
+import ProductDetail from "../components/ProductDetail";
+import { JoinedProducts } from "../components/Products";
+import database from "../db.json";
 
 const Headphones = () => {
-  const product = database.data[2]
-  const imageUrl = `${new URL(product.image.desktop, import.meta.url).href}`; 
+  const product = database.data;
   return (
     <div>
       <header className="h-84 bg-black px-[10%]">
         <NavBar />
-        <h2 className="mt-25 text-white text-center">
-          headphones
-        </h2>
+        <h2 className="mt-25 text-white text-center">headphones</h2>
       </header>
-      <section>
+      <section className=" px-[10%] pt-20 flex flex-col gap-20">
         <ProductDetail
-          details={product.description}
-          image={imageUrl}
-          productName={product.name}
+          details={product[3].description}
+          image={new URL(product[3].image.desktop, import.meta.url).href}
+          isNew={true}  
+          productName={product[3].name}
+          imageRight={false}
         />
+        <ProductDetail
+          details={product[2].description}
+          image={new URL(product[2].image.desktop, import.meta.url).href}
+          productName={product[2].name}
+          imageRight={true}
+        />
+        <ProductDetail
+          details={product[1].description}
+          image={new URL(product[1].image.desktop, import.meta.url).href}
+          productName={product[1].name}
+          imageRight={false}
+        />
+      <JoinedProducts/>
       </section>
+      <AudioGear/>
+      <Footer/>
     </div>
   );
-}
+};
 
-export default Headphones
+export default Headphones;
