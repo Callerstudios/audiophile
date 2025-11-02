@@ -9,7 +9,7 @@ type ProductProps = {
 const ProductDetail: React.FC<ProductProps> = ({image, productName, details}) => {
   return (
     <div>
-      <img src={image} alt="" />
+      <img src={image} alt="" className="h-140" />
       <div>
         <p>NEW PRODUCT</p>
         <h2>{productName}</h2>
