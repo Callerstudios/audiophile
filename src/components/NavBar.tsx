@@ -7,28 +7,28 @@ const NavBar = () => {
   return (
     <div className="pt-8 h-24 border-b border-white flex flex-row justify-between items-center">
       <img src={logo} alt="Website Logo" />
-      <nav>
+      <nav className="flex flex-row justify-between gap-4 text-white">
         <NavLink
           to={ROUTES.HOME}
-          className={({ isActive }) => (isActive ? "" : "")}
+          className={({ isActive }) => (isActive ? "text-xs" : "")}
         >
           HOME
         </NavLink>
         <NavLink
           to={ROUTES.HOME}
-          className={({ isActive }) => (isActive ? "" : "")}
+          className={({ isActive }) => (isActive ? "text-xs" : "")}
         >
           HEADPHONES
         </NavLink>
         <NavLink
           to={ROUTES.HOME}
-          className={({ isActive }) => (isActive ? "" : "")}
+          className={({ isActive }) => (isActive ? "text-xs" : "")}
         >
           SPEAKERS
         </NavLink>
         <NavLink
           to={ROUTES.HOME}
-          className={({ isActive }) => (isActive ? "" : "")}
+          className={({ isActive }) => (isActive ? "text-xs" : "")}
         >
           EARPHONES
         </NavLink>
