@@ -1,5 +1,5 @@
 import cartImage from "../assets/carts.svg";
-import logo from "../assets/carts.svg";
+import logo from "../assets/logo.svg";
 import { NavLink } from "react-router";
 import ROUTES from "../constants/routesNames";
 
