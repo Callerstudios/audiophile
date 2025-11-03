@@ -24,7 +24,7 @@ const ProductDetailCart: React.FC<ProductProps> = ({
 }) => {
   
   return (
-    <div className="flex flex-row gap-20 w-full justify-between items-center">
+    <div className="flex flex-col md:flex-row gap-10 md:gap-20 w-full justify-between items-center">
       <img
         src={image}
         alt={productName}
@@ -37,7 +37,7 @@ const ProductDetailCart: React.FC<ProductProps> = ({
         <h2>{productName}</h2>
         <p className="opacity-50">{details}</p>
         <h6>${price}</h6>
-        <div className="flex flex-row gap-5">
+        <div className="flex flex-row gap-5 w-full justify-between">
           <NumberSelector
             onChange={(val) => {
               setCount(val);

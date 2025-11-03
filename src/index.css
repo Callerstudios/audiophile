@@ -78,7 +78,7 @@ body {
   font-family: "Manrope Medium", sans-serif;
   /* font-weight: 500; */
   max-width: 100%;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   background-color: white;
   font-size: 15px;
   line-height: 25px;

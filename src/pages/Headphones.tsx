@@ -13,7 +13,7 @@ const Headphones = () => {
         <NavBar />
         <h2 className="mt-25 text-white text-center">headphones</h2>
       </header>
-      <section className=" px-[10%] pt-20 flex flex-col gap-20">
+      <section className=" px-[10%] pt-20 flex flex-col gap-30">
         <ProductDetail
           details={product[3].description}
           image={new URL(product[3].image.desktop, import.meta.url).href}

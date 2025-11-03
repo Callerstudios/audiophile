@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Button1 from "./Button1";
+import { useScreenSize } from "../hooks/useScreenSize";
 
 type ProductProps = {
   image: string;
@@ -18,16 +19,17 @@ const ProductDetail: React.FC<ProductProps> = ({
   imageRight = false,
   productId,
 }) => {
+  const screen = useScreenSize();
   const navigate = useNavigate();
   return (
-    <div className="flex flex-row gap-20 w-full justify-between items-center">
+    <div className="flex flex-col md:flex-row text-center gap-5 md:gap-20 w-full justify-between items-center">
       <img
         src={image}
         alt=""
         className={`h-120 min-w-[50%] object-cover basis-0.5 ${imageRight ? "order-2" : ""}`}
       />
       <div
-        className={`max-w-111 flex flex-col gap-2 ${imageRight ? "order-1" : ""}`}
+        className={`max-w-111 flex flex-col gap-10 ${imageRight ? "order-1" : ""}`}
       >
         {isNew && <p className="text-brown-1 wide-word">NEW PRODUCT</p>}
         <h2>{productName}</h2>
@@ -37,6 +39,7 @@ const ProductDetail: React.FC<ProductProps> = ({
           onClick={() => {
             navigate(`/product/${productId}`);
           }}
+          center={screen === "mobile"}
           type="primary"
         />
       </div>

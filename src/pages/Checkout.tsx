@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import TextField from "../components/form_elements/TextField/TextField";
 import CustomRadio from "../components/form_elements/CustomRadio/CustomRadio";
+import TextField from "../components/form_elements/TextField/TextField";
 // import NumberSelector from "../components/form_elements/NumberSelector/NumberSelector";
-import Button1 from "../components/Button1";
-import NavBar from "../components/NavBar";
-import { useNavigate } from "react-router-dom";
-import cashIcon from "../assets/cash-svg.svg";
-import Footer from "../components/Footer";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import type { RootState } from "../app/store";
-import type { Cart } from "../types/cartType";
+import cashIcon from "../assets/cash-svg.svg";
+import Button1 from "../components/Button1";
+import Footer from "../components/Footer";
+import NavBar from "../components/NavBar";
 import OrderSuccessModal from "../components/OrderSuccessModal";
+import type { Cart } from "../types/cartType";
 
 type FormData = {
   name: string;
@@ -33,6 +33,7 @@ const Checkout: React.FC = () => {
   );
   const [showSuccess, setShowSuccess] = useState(false);
   const [grandTotal, setGrandTotal] = useState(0);
+  
 
   const [formData, setFormData] = useState<FormData>({
     name: "",
@@ -248,7 +249,7 @@ const CartPreview: React.FC<CartPreviewProps> = ({ items, handleSubmit }) => {
 
   return (
     <div
-      className="bg-white rounded-lg w-[350px] ml-auto flex flex-col gap-5"
+      className="bg-white rounded-lg w-[350px] max-w-full ml-auto flex flex-col gap-5"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="flex flex-row justify-between">

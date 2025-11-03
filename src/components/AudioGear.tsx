@@ -3,7 +3,7 @@ import { useScreenSize } from "../hooks/useScreenSize";
 const AudioGear = () => {
   const screen = useScreenSize();
   return (
-    <div className="flex flex-col max-w-82 md:max-w-full lg:flex-row px-[10%] justify-between items-center my-30">
+    <div className="flex flex-col max-w-full gap-5 md:max-w-full lg:flex-row px-[10%] justify-between items-center my-30">
       <div
         className={`md:max-w-102 flex flex-col gap-10 ${screen === "mobile" ? "order-2" : ""}`}
       >

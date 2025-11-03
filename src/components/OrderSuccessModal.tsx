@@ -1,6 +1,7 @@
 import React from "react";
 import type { Cart } from "../types/cartType";
 import Button1 from "./Button1";
+// import { useScreenSize } from "../hooks/useScreenSize";
 
 interface OrderSuccessModalProps {
   items: Cart[];
@@ -13,6 +14,7 @@ const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({
   total,
   onClose,
 }) => {
+  // const screenType = useScreenSize();
   return (
     <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
       <div className="bg-white rounded-lg p-8 w-[90%] max-w-md shadow-xl text-center">
@@ -80,7 +82,7 @@ const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({
         </div>
 
         {/* Button */}
-        <Button1 content="back to home" onClick={onClose} type="primary"/>
+        <Button1 stretch content="back to home"   onClick={onClose} type="primary"/>
       </div>
     </div>
   );

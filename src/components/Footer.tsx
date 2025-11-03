@@ -13,25 +13,25 @@ const Footer = () => {
         <nav className="flex flex-col md:flex-row justify-between gap-5 text-white">
           <NavLink
             to={ROUTES.HOME}
-            className={({ isActive }) => (isActive ? "text-xs" : "")}
+            className={({ isActive }) => (isActive ? "text-xs" : "text-xs")}
           >
             HOME
           </NavLink>
           <NavLink
-            to={ROUTES.HOME}
-            className={({ isActive }) => (isActive ? "text-xs" : "")}
+            to={ROUTES.HEADPHONES}
+            className={({ isActive }) => (isActive ? "text-xs" : "text-xs")}
           >
             HEADPHONES
           </NavLink>
           <NavLink
-            to={ROUTES.HOME}
-            className={({ isActive }) => (isActive ? "text-xs" : "")}
+            to={ROUTES.SPEAKERS}
+            className={({ isActive }) => (isActive ? "text-xs" : "text-xs")}
           >
             SPEAKERS
           </NavLink>
           <NavLink
-            to={ROUTES.HOME}
-            className={({ isActive }) => (isActive ? "text-xs" : "")}
+            to={ROUTES.EARPHONES}
+            className={({ isActive }) => (isActive ? "text-xs" : "text-xs")}
           >
             EARPHONES
           </NavLink>

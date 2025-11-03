@@ -14,7 +14,7 @@ const NavBar: React.FC<NavBarProps> = ({ noBorder }) => {
       <div
         className={`${!noBorder ? "border-b border-white" : ""} px-[5%] md:px-0 flex flex-row justify-between items-center h-full`}
       >
-        <div className="md: hidden">
+        <div className="md:hidden">
           <img src={hamburgerIcon} alt="Hamburger Icon" />
         </div>
         <img src={logo} alt="Website Logo" />

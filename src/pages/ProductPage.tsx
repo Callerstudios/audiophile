@@ -16,6 +16,7 @@ import { addToCart, changeCountToBuy, clearCart } from "../slices/cartSlice";
 import { useEffect, useState } from "react";
 import NumberSelector from "../components/form_elements/NumberSelector/NumberSelector";
 import ROUTES from "../constants/routesNames";
+import { useScreenSize } from "../hooks/useScreenSize";
 
 const ProductPage = () => {
   const cartData = useSelector((state: RootState) => state.cart);
@@ -24,7 +25,7 @@ const ProductPage = () => {
   const [count, setCount] = useState(1);
   const [showCart, setShowCart] = useState(false);
   const navigate = useNavigate();
-  const screenType = "desktop";
+  const screenType = useScreenSize();
   const data = db.data.find((d) => d.id === Number(productId));
 
   useEffect(() => {
@@ -100,7 +101,7 @@ const ProductPage = () => {
             setCount={setCount}
           />
         </section>
-        <section className="px-[10%] mt-20 flex flex-row gap-30">
+        <section className="px-[10%] mt-20 flex flex-col md:flex-row gap-10 md:gap-30">
           <div className="max-w-160 flex flex-col gap-5">
             <h3>FEATURES</h3>
             <p className="opacity-50">{data.features}</p>
@@ -110,7 +111,7 @@ const ProductPage = () => {
             <ul>
               {data.includes.map((d) => {
                 return (
-                  <li className="flex flex-row gap-5">
+                  <li className="flex flex-row gap-5" key={d.item}>
                     <span className="text-brown-1">{d.quantity}x</span>
                     <span className="opacity-50">{d.item}</span>
                   </li>
@@ -119,8 +120,8 @@ const ProductPage = () => {
             </ul>
           </div>
         </section>
-        <section className="px-[10%] mt-20 flex flex-row gap-8 h-[540px] overflow-hidden">
-          <div className="basis-1/2 flex flex-col justify-between gap-5 h-full">
+        <section className="px-[10%] mt-20 flex flex-col md:flex-row gap-8 md:h-[540px] overflow-hidden">
+          <div className="basis-1/2 flex flex-col justify-between gap-5 h-92 md:h-full">
             <div className="flex-1 overflow-hidden rounded-lg  ">
               <img
                 src={data.gallery.first[screenType]}
@@ -137,7 +138,7 @@ const ProductPage = () => {
             </div>
           </div>
 
-          <div className="basis-1/2 h-full overflow-hidden rounded-lg">
+          <div className="basis-1/2 min-h-92 bg-red-500  md:h-full overflow-hidden rounded-lg">
             <img
               src={data.gallery.third[screenType]}
               alt="Gallery"
@@ -147,7 +148,7 @@ const ProductPage = () => {
         </section>
         <section className="px-[10%] mt-20 flex flex-col gap-5">
           <h3>you may also like</h3>
-          <div className="flex flex-row gap-8">
+          <div className="flex flex-col md:flex-row gap-8">
             <MayLike
               image={headphone1}
               productId="3"
