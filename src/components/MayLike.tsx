@@ -10,17 +10,17 @@ type MayLikeProps = {
 
 const MayLike: React.FC<MayLikeProps> = ({ image, productName, productId }) => {
   const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`${ROUTES.EMPTY_PRODUCT}/${productId}`);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className="max-w-88 flex flex-col items-center gap-5">
-      <img src={image} alt="" />
+      <img src={image} alt={productName} />
       <h5>{productName}</h5>
-      <Button1
-        content="see product"
-        onClick={() => {
-          navigate(`${ROUTES.EMPTY_PRODUCT}/${productId}`);
-        }}
-        type="primary"
-      />
+      <Button1 content="see product" onClick={handleClick} type="primary" />
     </div>
   );
 };
