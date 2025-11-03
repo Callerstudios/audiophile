@@ -1,14 +1,25 @@
+import { useNavigate } from "react-router-dom";
 import Button1 from "./Button1";
+import ROUTES from "../constants/routesNames";
 
 type ProductProps = {
-    image: string;
-    productName: string;
-    details: string;
-    isNew?: boolean;
-    imageRight?:boolean
-}
+  image: string;
+  productName: string;
+  details: string;
+  isNew?: boolean;
+  imageRight?: boolean;
+  productId: number;
+};
 
-const ProductDetail: React.FC<ProductProps> = ({image, productName, details, isNew, imageRight = false}) => {
+const ProductDetail: React.FC<ProductProps> = ({
+  image,
+  productName,
+  details,
+  isNew,
+  imageRight = false,
+  productId,
+}) => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-row gap-20 w-full justify-between items-center">
       <img
@@ -22,10 +33,16 @@ const ProductDetail: React.FC<ProductProps> = ({image, productName, details, isN
         {isNew && <p className="text-brown-1 wide-word">NEW PRODUCT</p>}
         <h2>{productName}</h2>
         <p>{details}</p>
-        <Button1 content="see product" onClick={() => {}} type="primary" />
+        <Button1
+          content="see product"
+          onClick={() => {
+            navigate(`${ROUTES.PRODUCT}/${productId}`);
+          }}
+          type="primary"
+        />
       </div>
     </div>
   );
-}
+};
 
-export default ProductDetail
+export default ProductDetail;

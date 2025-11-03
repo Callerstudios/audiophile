@@ -20,12 +20,14 @@ const Speakers = () => {
           isNew={true}
           productName={product[5].name}
           imageRight={false}
-        />
+          productId={product[5].id}
+          />
         <ProductDetail
           details={product[4].description}
           image={new URL(product[4].image.desktop, import.meta.url).href}
           productName={product[4].name}
           imageRight={true}
+          productId={product[4].id}
         />
         <JoinedProducts />
       </section>

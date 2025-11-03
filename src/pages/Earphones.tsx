@@ -20,6 +20,7 @@ const Earphones = () => {
           isNew={true}
           productName={product[0].name}
           imageRight={false}
+          productId={product[0].id}
         />
         <JoinedProducts />
       </section>

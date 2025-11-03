@@ -4,6 +4,7 @@ import earphoneImage2 from "../assets/product-yx1-earphones/desktop/image-galler
 import earphoneImage from "../assets/product-yx1-earphones/desktop/image-product.png";
 import speakerImage from "../assets/product-zx7-speaker/desktop/image-product.png";
 import speakerImage2 from "../assets/product-zx9-speaker/desktop/image-product.png";
+import ROUTES from "../constants/routesNames";
 import Button1 from "./Button1";
 import styles from "./ComponentsStyle.module.css";
 import Product from "./Product";
@@ -42,7 +43,11 @@ const Products = () => {
         </div>
       </div>
       <div className="flex justify-between flex-row gap-15">
-        <img src={earphoneImage2} alt="Earphone Image" className="aspect-video w-1/2" />
+        <img
+          src={earphoneImage2}
+          alt="Earphone Image"
+          className="aspect-video w-1/2"
+        />
         <div className="flex flex-col gap-6 w-3/6 bg-gray-1 p-20 asp">
           <h5>ZX7 SPEAKER</h5>
           <Button1 content="see product" onClick={() => {}} type="secondary" />
@@ -54,12 +59,12 @@ const Products = () => {
 
 export default Products;
 
-export const JoinedProducts = ()=>{
-    return (
-      <div className="flex flex-row gap-5 justify-between items-center">
-        <Product image={headphoneImage} name="headphones" />
-        <Product image={speakerImage} name="speakers" />
-        <Product image={earphoneImage} name="earphones" />
-      </div>
-    );
-}
+export const JoinedProducts = () => {
+  return (
+    <div className="flex flex-row gap-5 justify-between items-center">
+      <Product image={headphoneImage} name="headphones" navUrl={ROUTES.HEADPHONES} />
+      <Product image={speakerImage} name="speakers" navUrl={ROUTES.SPEAKERS} />
+      <Product image={earphoneImage} name="earphones" navUrl={ROUTES.EARPHONES} />
+    </div>
+  );
+};

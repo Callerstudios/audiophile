@@ -20,18 +20,21 @@ const Headphones = () => {
           isNew={true}  
           productName={product[3].name}
           imageRight={false}
-        />
+          productId={product[3].id}
+          />
         <ProductDetail
           details={product[2].description}
           image={new URL(product[2].image.desktop, import.meta.url).href}
           productName={product[2].name}
           imageRight={true}
-        />
+          productId={product[2].id}
+          />
         <ProductDetail
           details={product[1].description}
           image={new URL(product[1].image.desktop, import.meta.url).href}
           productName={product[1].name}
           imageRight={false}
+          productId={product[1].id}
         />
       <JoinedProducts/>
       </section>

@@ -8,7 +8,7 @@ type ButtonProps = {
 const Button2: React.FC<ButtonProps> = ({ content, onClick }) => {
   return (
     <div
-      className={`w-fit gap-2 h-12 flex flex-row justify-center items-center hover:text-brown-1`}
+      className={`w-fit gap-2 h-12 flex flex-row justify-center items-center hover:text-brown-1 cursor-pointer`}
       onClick={onClick}
     >
       <small

@@ -3,6 +3,7 @@ const ROUTES = {
   HEADPHONES: "/headphones",
   SPEAKERS: "/speakers",
   EARPHONES: "/earphones",
+  PRODUCT: "/product/:productId"
 } as const;
 
 export default ROUTES
