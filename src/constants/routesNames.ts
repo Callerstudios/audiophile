@@ -1,6 +1,8 @@
 const ROUTES = {
-    HOME: "/",
-    HEADPHONES: "headphones"
-} as const
+  HOME: "/",
+  HEADPHONES: "/headphones",
+  SPEAKERS: "/speakers",
+  EARPHONES: "/earphones",
+} as const;
 
 export default ROUTES

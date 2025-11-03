@@ -21,13 +21,13 @@ const NavBar = () => {
           HEADPHONES
         </NavLink>
         <NavLink
-          to={ROUTES.HOME}
+          to={ROUTES.SPEAKERS}
           className={({ isActive }) => (isActive ? "text-xs" : "text-xs")}
         >
           SPEAKERS
         </NavLink>
         <NavLink
-          to={ROUTES.HOME}
+          to={ROUTES.EARPHONES}
           className={({ isActive }) => (isActive ? "text-xs" : "text-xs")}
         >
           EARPHONES
