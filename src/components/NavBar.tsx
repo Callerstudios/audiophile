@@ -17,25 +17,25 @@ const NavBar: React.FC<NavBarProps> = ({ noBorder }) => {
         <nav className="flex flex-row justify-between gap-4 text-white">
           <NavLink
             to={ROUTES.HOME}
-            className={({ isActive }) => (isActive ? "text-xs" : "text-xs")}
+            className={({ isActive }) => (isActive ? "text-xs text-brown-1" : "text-xs")}
           >
             HOME
           </NavLink>
           <NavLink
             to={ROUTES.HEADPHONES}
-            className={({ isActive }) => (isActive ? "text-xs" : "text-xs")}
+            className={({ isActive }) => (isActive ? "text-xs text-brown-1" : "text-xs")}
           >
             HEADPHONES
           </NavLink>
           <NavLink
             to={ROUTES.SPEAKERS}
-            className={({ isActive }) => (isActive ? "text-xs" : "text-xs")}
+            className={({ isActive }) => (isActive ? "text-xs text-brown-1" : "text-xs")}
           >
             SPEAKERS
           </NavLink>
           <NavLink
             to={ROUTES.EARPHONES}
-            className={({ isActive }) => (isActive ? "text-xs" : "text-xs")}
+            className={({ isActive }) => (isActive ? "text-xs text-brown-1" : "text-xs")}
           >
             EARPHONES
           </NavLink>

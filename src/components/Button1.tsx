@@ -10,7 +10,7 @@ const Button1: React.FC<ButtonProps> = ({ content, type, onClick }) => {
     primary: "bg-brown-1 hover:bg-brown-2 text-white",
     secondary:
       " bg-transparent border border-black hover:bg-black text-black hover:text-white",
-    black: "bg-black hover:bg-white hover:text-black text-white",
+    black: "bg-black hover:bg-[#4C4C4C] text-white",
   };
   return (
     <div
