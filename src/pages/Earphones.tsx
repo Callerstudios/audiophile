@@ -9,7 +9,7 @@ const Earphones = () => {
   const product = database.data;
   return (
     <div>
-      <header className="h-84 bg-black px-[10%]">
+      <header className="h-84 bg-black">
         <NavBar />
         <h2 className="mt-25 text-white text-center">Earphones</h2>
       </header>

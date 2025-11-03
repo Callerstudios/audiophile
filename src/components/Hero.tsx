@@ -8,7 +8,7 @@ const Hero = () => {
       className={`${styles.hero} bg-cover bg-no-repeat w-full h-screen aspect-video`}
     >
       <NavBar />
-      <div className="flex flex-col max-w-100 gap-3 text-white" style={{marginTop: "100px"}}>
+      <div className="mx-[10%] mt-30 flex flex-col max-w-100 gap-3 text-white">
         <p className="opacity-50">NEW PRODUCT</p>
         <h1>XX99 Mark II Headphones</h1>
         <p>

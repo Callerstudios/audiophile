@@ -23,19 +23,19 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({
   };
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} bg-gray-1`}>
       <button
-        className={styles.button}
+        className={`${styles.button} hover:text-brown-1 opacity-25`}
         onClick={handleDecrease}
         aria-label="Decrease quantity"
-      >
+        >
         –
       </button>
 
       <span className={styles.value}>{value}</span>
 
       <button
-        className={styles.button}
+        className={`${styles.button} hover:text-brown-1 opacity-25`}
         onClick={handleIncrease}
         aria-label="Increase quantity"
       >
