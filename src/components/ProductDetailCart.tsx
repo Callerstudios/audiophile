@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import Button1 from "./Button1";
 import NumberSelector from "./form_elements/NumberSelector/NumberSelector";
 
@@ -8,8 +7,10 @@ type ProductProps = {
   details: string;
   isNew?: boolean;
   imageRight?: boolean;
-  productId: number;
   price: number;
+  onAddToCart: (amount: number )=> void
+  count: number
+  setCount: (val: number)=>void
 };
 
 const ProductDetailCart: React.FC<ProductProps> = ({
@@ -18,15 +19,15 @@ const ProductDetailCart: React.FC<ProductProps> = ({
   details,
   isNew,
   imageRight = false,
-  productId,
   price,
+  onAddToCart, count, setCount
 }) => {
-  const navigate = useNavigate();
+  
   return (
     <div className="flex flex-row gap-20 w-full justify-between items-center">
       <img
         src={image}
-        alt=""
+        alt={productName}
         className={`h-120 min-w-[50%] object-cover basis-0.5 ${imageRight ? "order-2" : ""}`}
       />
       <div
@@ -37,18 +38,26 @@ const ProductDetailCart: React.FC<ProductProps> = ({
         <p className="opacity-50">{details}</p>
         <h6>${price}</h6>
         <div className="flex flex-row gap-5">
-          <NumberSelector onChange={() => {}} value={1} />
+          <NumberSelector
+            onChange={(val) => {
+              setCount(val);
+            }}
+            value={count}
+          />
           <Button1
             content="add to cart"
             onClick={() => {
-              navigate(`/product/${productId}`);
+              onAddToCart(count)
             }}
             type="primary"
           />
         </div>
       </div>
+      
     </div>
   );
 };
 
 export default ProductDetailCart;
+
+

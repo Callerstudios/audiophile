@@ -25,7 +25,7 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({
   return (
     <div className={`${styles.container} bg-gray-1`}>
       <button
-        className={`${styles.button} hover:text-brown-1 opacity-25`}
+        className={`${styles.button} hover:text-brown-1 opacity-50`}
         onClick={handleDecrease}
         aria-label="Decrease quantity"
         >
@@ -35,7 +35,7 @@ const NumberSelector: React.FC<NumberSelectorProps> = ({
       <span className={styles.value}>{value}</span>
 
       <button
-        className={`${styles.button} hover:text-brown-1 opacity-25`}
+        className={`${styles.button} hover:text-brown-1 opacity-50`}
         onClick={handleIncrease}
         aria-label="Increase quantity"
       >
