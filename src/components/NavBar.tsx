@@ -10,11 +10,11 @@ type NavBarProps = {
 
 const NavBar: React.FC<NavBarProps> = ({ noBorder }) => {
   return (
-    <div className=" md:px-[10%] h-24 bg-black max-w-screen">
+    <div className=" md:px-[10%] h-24 bg-black w-full max-w-full">
       <div
         className={`${!noBorder ? "border-b border-white" : ""} px-[5%] md:px-0 flex flex-row justify-between items-center h-full`}
       >
-        <div>
+        <div className="md: hidden">
           <img src={hamburgerIcon} alt="Hamburger Icon" />
         </div>
         <img src={logo} alt="Website Logo" />

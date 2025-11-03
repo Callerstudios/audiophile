@@ -61,7 +61,7 @@ export default Products;
 
 export const JoinedProducts = () => {
   return (
-    <div className="flex flex-row gap-5 justify-between items-center">
+    <div className="flex flex-col px-[10%] md:px-0 md:flex-row gap-5 justify-between items-center">
       <Product image={headphoneImage} name="headphones" navUrl={ROUTES.HEADPHONES} />
       <Product image={speakerImage} name="speakers" navUrl={ROUTES.SPEAKERS} />
       <Product image={earphoneImage} name="earphones" navUrl={ROUTES.EARPHONES} />

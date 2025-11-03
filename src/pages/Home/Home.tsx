@@ -5,7 +5,7 @@ import Products from "../../components/Products";
 
 const Home = () => {
   return (
-    <div className="">
+    <div className="w-full">
       <Hero />
       <Products />
       <AudioGear />

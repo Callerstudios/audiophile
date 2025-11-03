@@ -12,14 +12,14 @@ const Hero = () => {
       style={{ backgroundImage: `url(${bgUrl})` }}
     >
       <NavBar />
-      <div className="mx-auto md:max-[10%] mt-30 flex flex-col max-w-100 gap-3 text-white">
+      <div className="mx-auto md:mx-[10%] mt-30 flex flex-col max-w-82 gap-3 text-white overflow-x-hiddenf text-center">
         <p className="opacity-50">NEW PRODUCT</p>
-        <h1>XX99 Mark II Headphones</h1>
+        <h1 className="text-4xl">XX99 Mark II Headphones</h1>
         <p>
           Experience natural, lifelike audio and exceptional build quality made
           for the passionate music enthusiast.
         </p>
-        <Button1 content="SEE PRODUCT" type="primary" onClick={() => {}} />
+        <Button1 center content="SEE PRODUCT" type="primary" onClick={() => {}} />
       </div>
     </div>
   );

@@ -2,10 +2,11 @@ import type React from "react";
 
 type ButtonProps = {
   content: string;
+  center?:boolean
   type: "primary" | "secondary" | "black";
   onClick: () => void;
 };
-const Button1: React.FC<ButtonProps> = ({ content, type, onClick }) => {
+const Button1: React.FC<ButtonProps> = ({ content, type, onClick, center }) => {
   const styles: Record<ButtonProps["type"], string> = {
     primary: "bg-brown-1 hover:bg-brown-2 text-white",
     secondary:
@@ -14,7 +15,7 @@ const Button1: React.FC<ButtonProps> = ({ content, type, onClick }) => {
   };
   return (
     <div
-      className={`w-40 h-12 cursor-pointer
+      className={`w-40 h-12 cursor-pointer ${center ? "mx-auto":""}
          flex justify-center items-center ${styles[type]}`}
       onClick={onClick}
     >
