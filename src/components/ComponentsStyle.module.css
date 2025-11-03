@@ -3,4 +3,5 @@
 }
 .speakerBg2{
     background-image: url(../assets/backgrounds/speaker-bg.png);
+    background-size: cover;
 }
