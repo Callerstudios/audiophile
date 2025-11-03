@@ -7,6 +7,7 @@ type TextFieldProps = {
   placeholder: string;
   value: string;
   error?: string;
+  fullWidth?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -17,15 +18,16 @@ const TextField: React.FC<TextFieldProps> = ({
   placeholder,
   value,
   onChange,
+  fullWidth,
 }) => {
   return (
-    <div className={styles.textField}>
+    <div className={`${styles.textField} ${fullWidth ? "w-full" : "max-w-77"}`}>
       <div className={styles.description}>
         <label htmlFor={id}>{label}</label>
         <small>{error}</small>
       </div>
       <input
-        style={{ border: error ? "2px solid var(--error)" : "" }}
+        style={{ border: error ? "2px solid #CD2C2C" : "" }}
         type="text"
         id={id}
         placeholder={placeholder}

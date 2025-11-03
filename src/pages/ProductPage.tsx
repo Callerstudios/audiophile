@@ -31,7 +31,7 @@ const ProductPage = () => {
     if (cartData.length > 0 && data) {
       const currentItem = cartData.find((c) => c.productId === String(data.id));
       if (currentItem) {
-        setCount(currentItem.count);
+        setCount(currentItem.quantity);
       }
     }
   }, [cartData, data]);
@@ -41,9 +41,9 @@ const ProductPage = () => {
     } else {
       document.body.style.overflowY = "auto";
     }
-    return()=>{
+    return () => {
       document.body.style.overflowY = "auto";
-    }
+    };
   }, [showCart]);
 
   if (!data) {
@@ -56,7 +56,7 @@ const ProductPage = () => {
       dispatch(
         changeCountToBuy({
           productId: String(data.id),
-          count,
+          quantity: count,
           imageUrl: data.image[screenType],
           price: data.price,
           productName: data.name,
@@ -66,7 +66,7 @@ const ProductPage = () => {
       dispatch(
         addToCart({
           productId: String(data.id),
-          count,
+          quantity: count,
           imageUrl: data.image[screenType],
           price: data.price,
           productName: data.name,
@@ -179,7 +179,7 @@ type CartPreviewProps = {
 const CartPreview: React.FC<CartPreviewProps> = ({ items, closeCart }) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const totalPrice = items.reduce((sum, i) => sum + i.price * i.count, 0);
+  const totalPrice = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
   const clearUserCart = () => {
     dispatch(clearCart());
     closeCart();
@@ -216,11 +216,11 @@ const CartPreview: React.FC<CartPreviewProps> = ({ items, closeCart }) => {
                   dispatch(
                     changeCountToBuy({
                       ...i,
-                      count: val,
+                      quantity: val,
                     })
                   );
                 }}
-                value={i.count}
+                value={i.quantity}
               />
             </div>
           ))}

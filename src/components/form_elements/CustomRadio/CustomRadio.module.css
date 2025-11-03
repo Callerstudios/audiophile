@@ -31,11 +31,11 @@
 }
 
 .radioContainer.active {
-  border-color: var(--brown-1);
+  border-color: #D87D4A;
 }
 
 .radioContainer.active .customCircle {
-  border-color: var(--brown-1);
+  border-color: #D87D4A;
 }
 
 .radioContainer.active .customCircle::after {
@@ -45,11 +45,11 @@
   left: 3px;
   width: 10px;
   height: 10px;
-  background-color: var(--brown-1);
+  background-color: #D87D4A;
   border-radius: 50%;
 }
 
 .label {
   font-weight: 600;
-  color: var(--black-1);
+  color: black;
 }

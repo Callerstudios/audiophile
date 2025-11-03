@@ -13,12 +13,12 @@ const cartSlice = createSlice({
     changeCountToBuy: (state, action: PayloadAction<Cart>) => {
       const item = state.find((s) => s.productId === action.payload.productId);
       if (item) {
-        item.count = action.payload.count;
+        item.quantity = action.payload.quantity;
       }
     },
-    clearCart: ()=>{
-        return []
-    }
+    clearCart: () => {
+      return [];
+    },
   },
 });
 
