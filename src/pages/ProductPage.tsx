@@ -12,8 +12,8 @@ import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../app/store";
 import type { Cart } from "../types/cartType";
-import { addToCart } from "../slices/cartSlice";
-import { useState } from "react";
+import { addToCart, changeCountToBuy } from "../slices/cartSlice";
+import { useEffect, useState } from "react";
 import NumberSelector from "../components/form_elements/NumberSelector/NumberSelector";
 
 const ProductPage = () => {
@@ -25,25 +25,52 @@ const ProductPage = () => {
   const navigate = useNavigate();
   const screenType = "desktop";
   const data = db.data.find((d) => d.id === Number(productId));
+
+  useEffect(() => {
+    if (cartData.length > 0 && data) {
+      const currentItem = cartData.find((c) => c.productId === String(data.id));
+      if (currentItem) {
+        setCount(currentItem.count);
+      }
+    }
+  }, [cartData, data]);
+
   if (!data) {
     return <h1>No Data</h1>;
   }
   const itemAdded = () => {
     setShowCart(true);
-    dispatch(
-      addToCart({
-        count,
-        imageUrl: data.image[screenType],
-        price: data.price,
-        productName: data.name,
-      })
-    );
+    const product = cartData.find((c) => c.productId === String(data.id));
+    if (product) {
+      dispatch(
+        changeCountToBuy({
+          productId: String(data.id),
+          count,
+          imageUrl: data.image[screenType],
+          price: data.price,
+          productName: data.name,
+        })
+      );
+    } else {
+      dispatch(
+        addToCart({
+          productId: String(data.id),
+          count,
+          imageUrl: data.image[screenType],
+          price: data.price,
+          productName: data.name,
+        })
+      );
+    }
   };
+
   return (
     <div>
       <NavBar noBorder={true} />
       <main className="relative">
-        {showCart && <CartPreview items={cartData} closeCart={()=>setShowCart(false)} />}
+        {showCart && (
+          <CartPreview items={cartData} closeCart={() => setShowCart(false)} />
+        )}
         <section className="px-[10%] mt-20">
           <p
             className="opacity-50 mb-5 cursor-pointer"
@@ -139,9 +166,10 @@ type CartPreviewProps = {
 };
 
 const CartPreview: React.FC<CartPreviewProps> = ({ items, closeCart }) => {
+  const dispatch = useDispatch<AppDispatch>();
   return (
     <div
-      className="fixed top-24 inset-0 bg-black/50 bg-opacity-50 flex justify-center items-center z-50 px-[10%]"
+      className="fixed inset-0 bg-black/50 bg-opacity-50 flex justify-center items-center z-50 px-[10%]"
       onClick={closeCart}
     >
       <div
@@ -164,7 +192,17 @@ const CartPreview: React.FC<CartPreviewProps> = ({ items, closeCart }) => {
                 <p>{i.productName}</p>
                 <p className="opacity-50">${i.price}</p>
               </div>
-              <NumberSelector onChange={() => {}} value={i.count} />
+              <NumberSelector
+                onChange={(val) => {
+                  dispatch(
+                    changeCountToBuy({
+                      ...i,
+                      count: val,
+                    })
+                  );
+                }}
+                value={i.count}
+              />
             </div>
           ))}
         </div>

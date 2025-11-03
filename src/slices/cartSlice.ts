@@ -1,14 +1,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Cart } from "../types/cartType";
 
-const initialState: Cart[] = [
-  {
-    count: 2,
-    imageUrl: "../assets/product-xx59-headphones/desktop/image-product.jpg",
-    price: 100,
-    productName: "Product1",
-  },
-];
+const initialState: Cart[] = [];
 
 const cartSlice = createSlice({
   name: "cart",
@@ -17,9 +10,15 @@ const cartSlice = createSlice({
     addToCart: (state, action: PayloadAction<Cart>) => {
       state.push(action.payload);
     },
+    changeCountToBuy: (state, action: PayloadAction<Cart>) => {
+      const item = state.find((s) => s.productId === action.payload.productId);
+      if (item) {
+        item.count = action.payload.count;
+      }
+    },
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, changeCountToBuy } = cartSlice.actions;
 
 export default cartSlice.reducer;
