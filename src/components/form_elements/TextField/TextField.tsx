@@ -7,7 +7,7 @@ type TextFieldProps = {
   placeholder: string;
   value: string;
   error?: string;
-  onChange: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const TextField: React.FC<TextFieldProps> = ({

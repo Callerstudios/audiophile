@@ -5,6 +5,7 @@ import Headphones from "./pages/Headphones";
 import Speakers from "./pages/Speakers";
 import Earphones from "./pages/Earphones";
 import ProductPage from "./pages/ProductPage";
+import Checkout from "./pages/Checkout";
 
 const routes: RouteObject[] = [
     {path: ROUTES.HOME, element: <Home/>},
@@ -12,6 +13,7 @@ const routes: RouteObject[] = [
     {path: ROUTES.SPEAKERS, element: <Speakers/>},
     {path: ROUTES.EARPHONES, element: <Earphones/>},
     {path: ROUTES.PRODUCT, element: <ProductPage/>},
+    {path: ROUTES.CHECKOUT, element: <Checkout/>},
 ]
 
 export default routes

@@ -4,7 +4,8 @@ const ROUTES = {
   SPEAKERS: "/speakers",
   EARPHONES: "/earphones",
   PRODUCT: "/product/:productId",
-  EMPTY_PRODUCT:"/product"
+  EMPTY_PRODUCT:"/product",
+  CHECKOUT: "/checkout"
 } as const;
 
 export default ROUTES

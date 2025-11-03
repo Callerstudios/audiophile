@@ -12,16 +12,17 @@ import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../app/store";
 import type { Cart } from "../types/cartType";
-import { addToCart, changeCountToBuy } from "../slices/cartSlice";
+import { addToCart, changeCountToBuy, clearCart } from "../slices/cartSlice";
 import { useEffect, useState } from "react";
 import NumberSelector from "../components/form_elements/NumberSelector/NumberSelector";
+import ROUTES from "../constants/routesNames";
 
 const ProductPage = () => {
   const cartData = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch<AppDispatch>();
   const { productId } = useParams();
   const [count, setCount] = useState(1);
-  const [showCart, setShowCart] = useState(true);
+  const [showCart, setShowCart] = useState(false);
   const navigate = useNavigate();
   const screenType = "desktop";
   const data = db.data.find((d) => d.id === Number(productId));
@@ -34,6 +35,16 @@ const ProductPage = () => {
       }
     }
   }, [cartData, data]);
+  useEffect(() => {
+    if (showCart) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "auto";
+    }
+    return()=>{
+      document.body.style.overflowY = "auto";
+    }
+  }, [showCart]);
 
   if (!data) {
     return <h1>No Data</h1>;
@@ -167,20 +178,28 @@ type CartPreviewProps = {
 
 const CartPreview: React.FC<CartPreviewProps> = ({ items, closeCart }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const totalPrice = items.reduce((sum, i) => sum + i.price * i.count, 0);
+  const clearUserCart = () => {
+    dispatch(clearCart());
+    closeCart();
+  };
   return (
     <div
       className="fixed inset-0 bg-black/50 bg-opacity-50 flex justify-center items-center z-50 px-[10%]"
       onClick={closeCart}
     >
       <div
-        className="bg-white rounded-lg shadow-lg p-6 w-[350px] ml-auto"
+        className="bg-white rounded-lg shadow-lg p-6 w-[350px] ml-auto flex flex-col gap-5"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-row justify-between">
           <h6 className="text-lg font-bold mb-4">Cart ({items.length})</h6>
-          <p className="opacity-50">Remove all</p>
+          <p className="opacity-50 cursor-pointer" onClick={clearUserCart}>
+            Remove all
+          </p>
         </div>
-        <div>
+        <div className="flex flex-col gap-5">
           {items.map((i) => (
             <div className="flex flex-row gap-2 items-center">
               <img
@@ -206,8 +225,16 @@ const CartPreview: React.FC<CartPreviewProps> = ({ items, closeCart }) => {
             </div>
           ))}
         </div>
-        <button className="mt-4 bg-brown-1 text-white w-full py-2 rounded cursor-pointer  ">
-          Checkout
+        <div className="flex flex-row justify-between">
+          <p className="opacity-50">TOTAL</p>
+          <p className="bold">${totalPrice}</p>
+        </div>
+
+        <button
+          className="mt-4 bg-brown-1 text-white w-full py-2 rounded cursor-pointer"
+          onClick={() => navigate(ROUTES.CHECKOUT)}
+        >
+          CHECKOUT
         </button>
       </div>
     </div>

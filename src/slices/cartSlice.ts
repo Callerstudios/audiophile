@@ -16,9 +16,12 @@ const cartSlice = createSlice({
         item.count = action.payload.count;
       }
     },
+    clearCart: ()=>{
+        return []
+    }
   },
 });
 
-export const { addToCart, changeCountToBuy } = cartSlice.actions;
+export const { addToCart, changeCountToBuy, clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
