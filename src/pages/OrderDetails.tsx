@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import NavBar from "../components/NavBar";
 
 const OrderDetails = () => {
   const { orderId } = useParams<{ orderId: string }>();
@@ -17,6 +18,7 @@ const OrderDetails = () => {
 
   return (
     <div className="p-6 max-w-3xl mx-auto bg-white shadow-lg rounded-lg">
+        <NavBar/>
       <h3 className="text-2xl font-bold text-brown-1 mb-4">Order #{orderId}</h3>
 
       <div className="space-y-2 mb-6">
