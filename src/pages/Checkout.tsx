@@ -30,8 +30,7 @@ type FormData = {
 const Checkout: React.FC = () => {
   const createOrder = useMutation(api.orders.createOrder);
   const shipping = 50;
-  const vat = 1079;
-
+  
   const navigate = useNavigate();
   const cartData = useSelector((state: RootState) => state.cart);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
@@ -39,6 +38,7 @@ const Checkout: React.FC = () => {
   );
   const [showSuccess, setShowSuccess] = useState(false);
   const [grandTotal, setGrandTotal] = useState(0);
+  const vat = (grandTotal - shipping) * 0.12;
 
   const [formData, setFormData] = useState<FormData>({
     name: "",
@@ -284,7 +284,7 @@ type CartPreviewProps = {
 const CartPreview: React.FC<CartPreviewProps> = ({ items, handleSubmit }) => {
   const totalPrice = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
   const shipping = 50;
-  const vat = 1079;
+  const vat = totalPrice * 0.12;
   const grandTotal = totalPrice + shipping + vat;
 
   return (

@@ -29,7 +29,7 @@ export const sendOrderConfirmation = internalAction({
       taxes: v.number()
     }),
   },
-  handler: async (ctx, args) => {
+  handler: async (_, args) => {
     const resendApiKey = process.env.RESEND_API_KEY;
     if (!resendApiKey) {
       throw new Error("RESEND_API_KEY not configured");
