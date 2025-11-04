@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import curves from "../assets/backgrounds/curve.png";
 import headphoneImage from "../assets/product-xx99-mark-one-headphones/desktop/image-product.png";
 import earphoneImage2 from "../assets/product-yx1-earphones/desktop/image-gallery-2.jpg";
@@ -10,7 +11,7 @@ import styles from "./ComponentsStyle.module.css";
 import Product from "./Product";
 
 const Products = () => {
-  
+  const navigate = useNavigate()
   return (
     <section className="px-[10%] flex flex-col gap-20 ">
       <JoinedProducts />
@@ -28,7 +29,13 @@ const Products = () => {
               Experience natural, lifelike audio and exceptional build quality
               made for the passionate music enthusiast.
             </p>
-            <Button1 content="SEE PRODUCT" type="black" onClick={() => {}} />
+            <Button1
+              content="SEE PRODUCT"
+              type="black"
+              onClick={() => {
+                navigate(`${ROUTES.EMPTY_PRODUCT}/6`);
+              }}
+            />
           </div>
         </div>
       </div>
@@ -37,7 +44,13 @@ const Products = () => {
       >
         <div className="w-fit flex flex-col gap-6">
           <h5>ZX7 SPEAKER</h5>
-          <Button1 content="see product" onClick={() => {}} type="secondary" />
+          <Button1
+            content="see product"
+            onClick={() => {
+              navigate(`${ROUTES.EMPTY_PRODUCT}/5`);
+            }}
+            type="secondary"
+          />
         </div>
       </div>
       <div className="flex justify-between flex-col items-center md:flex-row gap-15">
@@ -48,7 +61,7 @@ const Products = () => {
         />
         <div className="flex flex-col gap-6 w-full md:w-3/6 bg-gray-1 p-20 asp">
           <h5>YX1 EARPHONES</h5>
-          <Button1 content="see product" onClick={() => {}} type="secondary" />
+          <Button1 content="see product" onClick={() => {navigate(`${ROUTES.EMPTY_PRODUCT}/1`);}} type="secondary" />
         </div>
       </div>
     </section>

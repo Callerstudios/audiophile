@@ -1,0 +1,257 @@
+// convex/email.ts
+import { internalAction } from "./_generated/server";
+import { v } from "convex/values";
+import type { Id } from "./_generated/dataModel";
+
+// Internal action to send order confirmation email
+export const sendOrderConfirmation = internalAction({
+  args: {
+    orderId: v.id("orders"),
+    name: v.string(),
+    to: v.string(),
+    items: v.array(
+      v.object({
+        id: v.string(),
+        name: v.string(),
+        price: v.number(),
+        quantity: v.number(),
+      })
+    ),
+    shipping: v.object({
+      address: v.string(),
+      city: v.string(),
+      state: v.string(),
+      country: v.string(),
+    }),
+    totals: v.object({
+      grandTotal: v.number(),
+    }),
+  },
+  handler: async (ctx, args) => {
+    const resendApiKey = process.env.RESEND_API_KEY;
+    if (!resendApiKey) {
+      throw new Error("RESEND_API_KEY not configured");
+    }
+
+    // Calculate subtotal from items
+    const subtotal = args.items.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+
+    // You'll need to get shipping cost and taxes from your order record
+    // For now, we'll calculate them (adjust as needed)
+    const shippingCost = 10.0; // Or pass this separately if needed
+    const taxes = subtotal * 0.08; // 8% tax rate
+
+    const emailHtml = generateOrderEmailHtml({
+      orderId: args.orderId,
+      customerName: args.name,
+      customerEmail: args.to,
+      items: args.items,
+      shippingAddress: {
+        street: args.shipping.address,
+        city: args.shipping.city,
+        state: args.shipping.state,
+        zipCode: "", // Not provided in shipping object
+        country: args.shipping.country,
+      },
+      subtotal,
+      shippingCost,
+      taxes,
+      grandTotal: args.totals.grandTotal,
+    });
+
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${resendApiKey}`,
+      },
+      body: JSON.stringify({
+        from: "orders@yourdomain.com", // Replace with your verified domain
+        to: args.to,
+        subject: `Order Confirmation - ${args.orderId}`,
+        html: emailHtml,
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`Failed to send email: ${error}`);
+    }
+
+    const data = await response.json();
+    return data;
+  },
+});
+
+// Helper function to generate email HTML
+function generateOrderEmailHtml(order: {
+  orderId: Id<"orders">;
+  customerName: string;
+  customerEmail: string;
+  items: Array<{
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+  }>;
+  subtotal: number;
+  shippingCost: number;
+  taxes: number;
+  grandTotal: number;
+  shippingAddress: {
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+  };
+}): string {
+  const itemsHtml = order.items
+    .map(
+      (item) => `
+      <tr>
+        <td style="padding: 12px; border-bottom: 1px solid #e5e7eb;">${item.name}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: center;">${item.quantity}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right;">$${item.price.toFixed(2)}</td>
+        <td style="padding: 12px; border-bottom: 1px solid #e5e7eb; text-align: right; font-weight: 600;">$${(item.price * item.quantity).toFixed(2)}</td>
+      </tr>
+    `
+    )
+    .join("");
+
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Order Confirmation</title>
+    </head>
+    <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f3f4f6;">
+      <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f3f4f6; padding: 40px 0;">
+        <tr>
+          <td align="center">
+            <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+              
+              <!-- Header -->
+              <tr>
+                <td style="background-color: #4f46e5; padding: 40px 30px; text-align: center;">
+                  <h1 style="margin: 0; color: #ffffff; font-size: 28px;">Thank You for Your Order!</h1>
+                </td>
+              </tr>
+              
+              <!-- Greeting -->
+              <tr>
+                <td style="padding: 30px 30px 20px;">
+                  <p style="margin: 0; font-size: 16px; color: #374151;">Hi ${order.customerName},</p>
+                  <p style="margin: 15px 0 0; font-size: 16px; color: #374151; line-height: 1.6;">
+                    We've received your order and it's being processed. You'll receive another email when your order ships.
+                  </p>
+                </td>
+              </tr>
+              
+              <!-- Order ID -->
+              <tr>
+                <td style="padding: 0 30px 20px;">
+                  <div style="background-color: #f9fafb; padding: 15px; border-radius: 6px; border-left: 4px solid #4f46e5;">
+                    <p style="margin: 0; font-size: 14px; color: #6b7280;">Order ID:</p>
+                    <p style="margin: 5px 0 0; font-size: 18px; font-weight: 600; color: #111827;">${order.orderId}</p>
+                  </div>
+                </td>
+              </tr>
+              
+              <!-- Order Items -->
+              <tr>
+                <td style="padding: 0 30px 20px;">
+                  <h2 style="margin: 0 0 15px; font-size: 20px; color: #111827;">Order Summary</h2>
+                  <table width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #e5e7eb; border-radius: 6px; overflow: hidden;">
+                    <thead>
+                      <tr style="background-color: #f9fafb;">
+                        <th style="padding: 12px; text-align: left; font-size: 14px; color: #6b7280; font-weight: 600;">Item</th>
+                        <th style="padding: 12px; text-align: center; font-size: 14px; color: #6b7280; font-weight: 600;">Qty</th>
+                        <th style="padding: 12px; text-align: right; font-size: 14px; color: #6b7280; font-weight: 600;">Price</th>
+                        <th style="padding: 12px; text-align: right; font-size: 14px; color: #6b7280; font-weight: 600;">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${itemsHtml}
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              
+              <!-- Totals -->
+              <tr>
+                <td style="padding: 0 30px 20px;">
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Subtotal:</td>
+                      <td style="padding: 8px 0; font-size: 14px; color: #111827; text-align: right;">$${order.subtotal.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Shipping:</td>
+                      <td style="padding: 8px 0; font-size: 14px; color: #111827; text-align: right;">${order.shippingCost.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 8px 0; font-size: 14px; color: #6b7280;">Taxes:</td>
+                      <td style="padding: 8px 0; font-size: 14px; color: #111827; text-align: right;">$${order.taxes.toFixed(2)}</td>
+                    </tr>
+                    <tr style="border-top: 2px solid #e5e7eb;">
+                      <td style="padding: 12px 0 0; font-size: 18px; font-weight: 700; color: #111827;">Grand Total:</td>
+                      <td style="padding: 12px 0 0; font-size: 18px; font-weight: 700; color: #4f46e5; text-align: right;">$${order.grandTotal.toFixed(2)}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              
+              <!-- Shipping Details -->
+              <tr>
+                <td style="padding: 0 30px 20px;">
+                  <h2 style="margin: 0 0 15px; font-size: 20px; color: #111827;">Shipping Details</h2>
+                  <div style="background-color: #f9fafb; padding: 15px; border-radius: 6px;">
+                    <p style="margin: 0; font-size: 14px; color: #111827; line-height: 1.8;">
+                      ${order.shippingAddress.street}<br>
+                      ${order.shippingAddress.city}, ${order.shippingAddress.state} ${order.shippingAddress.zipCode}<br>
+                      ${order.shippingAddress.country}
+                    </p>
+                  </div>
+                </td>
+              </tr>
+              
+              <!-- CTA Button -->
+              <tr>
+                <td style="padding: 0 30px 30px; text-align: center;">
+                  <a href="https://yourdomain.com/orders/${order.orderId}" style="display: inline-block; background-color: #4f46e5; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-size: 16px; font-weight: 600;">View Your Order</a>
+                </td>
+              </tr>
+              
+              <!-- Support Info -->
+              <tr>
+                <td style="padding: 0 30px 30px; text-align: center; border-top: 1px solid #e5e7eb;">
+                  <p style="margin: 20px 0 0; font-size: 14px; color: #6b7280; line-height: 1.6;">
+                    Need help? Contact our support team at<br>
+                    <a href="mailto:support@yourdomain.com" style="color: #4f46e5; text-decoration: none;">support@yourdomain.com</a>
+                  </p>
+                </td>
+              </tr>
+              
+              <!-- Footer -->
+              <tr>
+                <td style="background-color: #f9fafb; padding: 20px 30px; text-align: center;">
+                  <p style="margin: 0; font-size: 12px; color: #9ca3af;">
+                    © ${new Date().getFullYear()} Your Company. All rights reserved.
+                  </p>
+                </td>
+              </tr>
+              
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  `;
+}

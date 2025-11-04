@@ -4,8 +4,10 @@ import NavBar from "../components/NavBar";
 import ProductDetail from "../components/ProductDetail";
 import { JoinedProducts } from "../components/Products";
 import database from "../db.json";
+import { useScreenSize } from "../hooks/useScreenSize";
 
 const Headphones = () => {
+  const screenType = useScreenSize()
   const product = database.data;
   return (
     <div>
@@ -16,7 +18,7 @@ const Headphones = () => {
       <section className=" px-[10%] pt-20 flex flex-col gap-30">
         <ProductDetail
           details={product[3].description}
-          image={new URL(product[3].image.desktop, import.meta.url).href}
+          image={new URL(product[3].image[screenType], import.meta.url).href}
           isNew={true}  
           productName={product[3].name}
           imageRight={false}
@@ -24,14 +26,14 @@ const Headphones = () => {
           />
         <ProductDetail
           details={product[2].description}
-          image={new URL(product[2].image.desktop, import.meta.url).href}
+          image={new URL(product[2].image[screenType], import.meta.url).href}
           productName={product[2].name}
           imageRight={true}
           productId={product[2].id}
           />
         <ProductDetail
           details={product[1].description}
-          image={new URL(product[1].image.desktop, import.meta.url).href}
+          image={new URL(product[1].image[screenType], import.meta.url).href}
           productName={product[1].name}
           imageRight={false}
           productId={product[1].id}

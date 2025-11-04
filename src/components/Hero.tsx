@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import { useScreenSize } from "../hooks/useScreenSize";
 import Button1 from "./Button1";
 import NavBar from "./NavBar";
 import styles from "./styles/Hero.module.css"
+import ROUTES from "../constants/routesNames";
 
 const Hero = () => {
   const screen = useScreenSize()
+  const navigate = useNavigate()
   const bgUrl = `../../assets/home/${screen}/image-header.jpg`;
   return (
     <div
@@ -19,7 +22,7 @@ const Hero = () => {
           Experience natural, lifelike audio and exceptional build quality made
           for the passionate music enthusiast.
         </p>
-        <Button1 center content="SEE PRODUCT" type="primary" onClick={() => {}} />
+        <Button1 center content="SEE PRODUCT" type="primary" onClick={() => {navigate(ROUTES.HEADPHONES)}} />
       </div>
     </div>
   );

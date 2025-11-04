@@ -11,6 +11,8 @@ import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import OrderSuccessModal from "../components/OrderSuccessModal";
 import type { Cart } from "../types/cartType";
+import { useMutation } from "convex/react";
+import { api } from "../../convex/_generated/api";
 
 type FormData = {
   name: string;
@@ -26,6 +28,10 @@ type FormData = {
 };
 
 const Checkout: React.FC = () => {
+  const createOrder = useMutation(api.orders.createOrder);
+  const shipping = 50;
+  const vat = 1079;
+
   const navigate = useNavigate();
   const cartData = useSelector((state: RootState) => state.cart);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
@@ -33,7 +39,6 @@ const Checkout: React.FC = () => {
   );
   const [showSuccess, setShowSuccess] = useState(false);
   const [grandTotal, setGrandTotal] = useState(0);
-  
 
   const [formData, setFormData] = useState<FormData>({
     name: "",
@@ -47,6 +52,40 @@ const Checkout: React.FC = () => {
     eMoneyNumber: 0,
     eMoneyPin: 0,
   });
+
+  const handleCheckout = async () => {
+    try {
+      // Create the order in Convex
+      const orderId = await createOrder({
+        customerName: formData.name,
+        customerEmail: formData.email,
+        customerPhone: formData.phone,
+        shippingAddress: {
+          street: formData.address,
+          city: formData.city,
+          state: formData.city,
+          zipCode: formData.zip,
+          country: formData.country,
+        },
+        items: cartData.map((item: Cart) => ({
+          id: item.productId,
+          name: item.productName,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+        subtotal: grandTotal - shipping - vat,
+        shipping, // Calculate your shipping cost
+        taxes: vat,
+        grandTotal: grandTotal,
+      });
+
+      console.log("Order created:", orderId);
+      // Redirect to success page or show confirmation
+      // The email will be sent automatically via the action
+    } catch (error) {
+      console.error("Checkout failed:", error);
+    }
+  };
   const validateForm = () => {
     const newErrors: Partial<Record<keyof FormData, string>> = {};
 
@@ -69,13 +108,14 @@ const Checkout: React.FC = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; // ✅ returns true if valid
   };
-  const handleSubmit = (_grandTotal: number) => {
+  const handleSubmit = async (_grandTotal: number) => {
     setGrandTotal(_grandTotal);
     if (validateForm()) {
+      await handleCheckout();
       setShowSuccess(true);
       // proceed with payment logic or navigation
     } else {
-      console.warn("Form invalid ❌");
+      alert("Form invalid ❌");
     }
   };
 
