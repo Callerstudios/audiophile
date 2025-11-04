@@ -2,6 +2,7 @@
 import { mutation, query } from "./_generated/server";
 import { internal } from "./_generated/api";
 import { v } from "convex/values";
+import { v4 as uuidv4 } from "uuid"; // for generating unique string order IDs
 
 // Mutation to create order
 export const createOrder = mutation({
@@ -30,14 +31,18 @@ export const createOrder = mutation({
     grandTotal: v.number(),
   },
   handler: async (ctx, args) => {
-    const orderId = await ctx.db.insert("orders", {
+    // Generate a unique string order ID for URL use
+    const orderId = uuidv4(); // string for URLs
+
+    await ctx.db.insert("orders", {
       ...args,
+      orderId, // store string ID in database
       status: "pending",
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });
 
-    // 📨 Trigger email sending internally
+    // Call email action with the string ID
     await ctx.scheduler.runAfter(0, internal.email.sendOrderConfirmation, {
       orderId,
       name: args.customerName,
@@ -52,24 +57,24 @@ export const createOrder = mutation({
       totals: {
         grandTotal: args.grandTotal,
         shipping: args.shipping,
-        taxes: args.taxes
+        taxes: args.taxes,
       },
     });
-    console.log("Email Triggered")
-    return orderId;
+
+    return orderId; // return string orderId for URL
   },
 });
 
-// Query to get order by ID
+// Query to get order by string orderId
 export const getOrder = query({
   args: { orderId: v.string() },
   handler: async (ctx, { orderId }) => {
-    const result = await ctx.db
+    const order = await ctx.db
       .query("orders")
-      .filter((q) => q.eq(q._id, orderId)) // compare _id field directly
+      .withIndex("by_orderId", (q) => q.eq("orderId", orderId))
       .first();
 
-    return result ?? null;
+    return order ?? null;
   },
 });
 

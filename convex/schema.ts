@@ -34,6 +34,9 @@ export default defineSchema({
     taxes: v.number(),
     grandTotal: v.number(),
 
+    // Order ID for external URLs
+    orderId: v.string(), // <-- NEW
+
     // Order status & timestamp
     status: v.string(), // "pending", "confirmed", "shipped", "delivered", "cancelled"
     createdAt: v.number(),
@@ -41,5 +44,6 @@ export default defineSchema({
   })
     .index("by_email", ["customerEmail"])
     .index("by_status", ["status"])
-    .index("by_created_at", ["createdAt"]),
+    .index("by_created_at", ["createdAt"])
+    .index("by_orderId", ["orderId"]),
 });

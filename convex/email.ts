@@ -1,12 +1,11 @@
 // convex/email.ts
 import { internalAction } from "./_generated/server";
 import { v } from "convex/values";
-import type { Id } from "./_generated/dataModel";
 
 // Internal action to send order confirmation email
 export const sendOrderConfirmation = internalAction({
   args: {
-    orderId: v.id("orders"),
+    orderId: v.string(), // <--- change from v.id("orders")
     name: v.string(),
     to: v.string(),
     items: v.array(
@@ -26,7 +25,7 @@ export const sendOrderConfirmation = internalAction({
     totals: v.object({
       grandTotal: v.number(),
       shipping: v.number(),
-      taxes: v.number()
+      taxes: v.number(),
     }),
   },
   handler: async (_, args) => {
@@ -35,7 +34,6 @@ export const sendOrderConfirmation = internalAction({
       throw new Error("RESEND_API_KEY not configured");
     }
     console.log("Sending");
-    
 
     // Calculate subtotal from items
     const subtotal = args.items.reduce(
@@ -92,7 +90,7 @@ export const sendOrderConfirmation = internalAction({
 
 // Helper function to generate email HTML
 function generateOrderEmailHtml(order: {
-  orderId: Id<"orders">;
+  orderId: string;
   customerName: string;
   customerEmail: string;
   items: Array<{
