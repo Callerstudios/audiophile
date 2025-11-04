@@ -1,22 +1,22 @@
-// src/pages/orders/[orderId].tsx
-import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 
-const OrderDetails: React.FC = () => {
-  // Get orderId from the URL
+const OrderDetails = () => {
   const { orderId } = useParams<{ orderId: string }>();
 
-  // Fetch order using the string orderId
-  const order = useQuery(orderId ? api.orders.getOrder : null, orderId || "");
+  const order = useQuery(
+    api.orders.getOrder,
+    orderId ? { orderId } : ("skip" as const)
+  );
 
   if (!orderId) return <p>No order ID provided.</p>;
-  if (!order) return <p>Loading order...</p>;
+  if (orderId && !order) return <p>Loading order...</p>;
+  if (!order) return <p>Order not found.</p>;
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Order #{order.orderId}</h2>
+    <div style={{ padding: "20px" }}>
+      <h2>Order #{orderId}</h2>
       <p>
         <strong>Name:</strong> {order.customerName}
       </p>
@@ -31,7 +31,7 @@ const OrderDetails: React.FC = () => {
       </p>
 
       <h3>Items</h3>
-      {order.items.length > 0 ? (
+      {order.items.length ? (
         <ul>
           {order.items.map((item) => (
             <li key={item.id}>
@@ -43,7 +43,7 @@ const OrderDetails: React.FC = () => {
         <p>No items in this order.</p>
       )}
 
-      <h3>Shipping Address</h3>
+      <h3>Address</h3>
       <p>
         {order.shippingAddress.street}, {order.shippingAddress.city},{" "}
         {order.shippingAddress.state}, {order.shippingAddress.country} (
