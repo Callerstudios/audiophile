@@ -25,6 +25,8 @@ export const sendOrderConfirmation = internalAction({
     }),
     totals: v.object({
       grandTotal: v.number(),
+      shipping: v.number(),
+      taxes: v.number()
     }),
   },
   handler: async (ctx, args) => {
@@ -32,6 +34,8 @@ export const sendOrderConfirmation = internalAction({
     if (!resendApiKey) {
       throw new Error("RESEND_API_KEY not configured");
     }
+    console.log("Sending");
+    
 
     // Calculate subtotal from items
     const subtotal = args.items.reduce(
@@ -41,8 +45,8 @@ export const sendOrderConfirmation = internalAction({
 
     // You'll need to get shipping cost and taxes from your order record
     // For now, we'll calculate them (adjust as needed)
-    const shippingCost = 10.0; // Or pass this separately if needed
-    const taxes = subtotal * 0.08; // 8% tax rate
+    // const shippingCost = 10.0; // Or pass this separately if needed
+    // const taxes = subtotal * 0.08; // 8% tax rate
 
     const emailHtml = generateOrderEmailHtml({
       orderId: args.orderId,
@@ -57,8 +61,8 @@ export const sendOrderConfirmation = internalAction({
         country: args.shipping.country,
       },
       subtotal,
-      shippingCost,
-      taxes,
+      shippingCost: args.totals.shipping,
+      taxes: args.totals.taxes,
       grandTotal: args.totals.grandTotal,
     });
 
@@ -69,7 +73,7 @@ export const sendOrderConfirmation = internalAction({
         Authorization: `Bearer ${resendApiKey}`,
       },
       body: JSON.stringify({
-        from: "orders@yourdomain.com", // Replace with your verified domain
+        from: "Busari Roqeeb <noreply@busariroqeeb.cv>", // Replace with your verified domain
         to: args.to,
         subject: `Order Confirmation - ${args.orderId}`,
         html: emailHtml,
@@ -224,7 +228,7 @@ function generateOrderEmailHtml(order: {
               <!-- CTA Button -->
               <tr>
                 <td style="padding: 0 30px 30px; text-align: center;">
-                  <a href="https://yourdomain.com/orders/${order.orderId}" style="display: inline-block; background-color: #4f46e5; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-size: 16px; font-weight: 600;">View Your Order</a>
+                  <a href="https://audiophile-sigma-mauve.vercel.app/orders/${order.orderId}" style="display: inline-block; background-color: #4f46e5; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-size: 16px; font-weight: 600;">View Your Order</a>
                 </td>
               </tr>
               

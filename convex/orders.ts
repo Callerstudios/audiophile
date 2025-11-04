@@ -51,6 +51,8 @@ export const createOrder = mutation({
       },
       totals: {
         grandTotal: args.grandTotal,
+        shipping: args.shipping,
+        taxes: args.taxes
       },
     });
     console.log("Email Triggered")
