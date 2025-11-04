@@ -62,9 +62,14 @@ export const createOrder = mutation({
 
 // Query to get order by ID
 export const getOrder = query({
-  args: { orderId: v.id("orders") },
-  handler: async (ctx, args) => {
-    return await ctx.db.get(args.orderId);
+  args: { orderId: v.string() },
+  handler: async (ctx, { orderId }) => {
+    const result = await ctx.db
+      .query("orders")
+      .filter((q) => q.eq(q._id, orderId)) // compare _id field directly
+      .first();
+
+    return result ?? null;
   },
 });
 

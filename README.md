@@ -1,73 +1,107 @@
-# React + TypeScript + Vite
+# :headphones: Audiophile E-Commerce Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **pixel-perfect e-commerce website** built with **React/Next.js** and **Convex backend** for Stage 3a of the Frontend Wizards program.  
+This project brings the **Audiophile Figma design** to life and implements a full checkout flow with order storage and confirmation emails.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## :sparkles: Features
 
-## React Compiler
+- **Responsive Design:** Works perfectly on **mobile, tablet, and desktop**  
+- **Product Pages:** Display products with details, images, and prices  
+- **Shopping Cart:** Add/remove items, update quantities  
+- **Checkout Form:** Collects user information and validates all inputs  
+- **Order Storage:** Orders saved securely in **Convex backend**  
+- **Confirmation Email:** Sends transactional HTML emails on successful checkout  
+- **Order Confirmation Page:** Displays order summary including items, totals, and shipping details  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## :hammer_and_wrench: Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend:** React, Next.js  
+- **Backend:** Convex  
+- **Email Service:** Resend API or Nodemailer  
+- **Styling:** CSS/SCSS or styled-components  
+- **Deployment:** Vercel or Netlify  
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## :rocket: Getting Started
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/audiophile-ecommerce.git
+cd audiophile-ecommerce
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 2. Install Dependencies
+``` bash
+Copy code
+npm install 
 ```
+# or
+``` bash
+yarn install
+```
+3. Set Up Environment Variables
+Create a .env.local file in the root directory with the following variables:
+
+ini
+Copy code
+NEXT_PUBLIC_CONVEX_URL=your_convex_project_url
+RESEND_API_KEY=your_resend_api_key
+4. Run the Development Server
+``` bash
+Copy code
+npm run dev
+# or
+yarn dev
+```
+Open http://localhost:3000 to view the app in your browser.
+
+:page_facing_up: Project Structure
+bash
+Copy code
+/components     # Reusable UI components
+/pages          # Next.js pages (Home, Product, Checkout, Order Confirmation)
+/styles         # CSS or styled-components files
+/convex         # Backend functions and queries
+:white_check_mark: How It Works
+Users browse products and add them to the cart
+
+On checkout:
+
+User fills in their details
+
+Form validates input and handles edge cases
+
+Order is saved in Convex backend
+
+Confirmation email is sent to the user
+
+User is redirected to Order Confirmation Page showing the full order summary
+
+:link: Live Demo
+View Live App
+
+:email: Example Confirmation Email
+html
+Copy code
+<h1>Thank you for your order, John!</h1>
+<p>Order #12345</p>
+<ul>
+  <li>Headphones - $299</li>
+  <li>Speaker - $199</li>
+</ul>
+<p>Shipping to: 123 Main Street, City, Country</p>
+<a href="https://your-app.vercel.app/orders/12345">View your order</a>
+:memo: Notes
+Make sure all environment variables are configured correctly
+
+Checkout and email sending require a live backend (Convex + Resend)
+
+The site should match the Figma design pixel-perfect across all screen sizes
+
+:sparkles: Author
+Frontend Wizards Stage 3a Student Project
