@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CustomRadio from "../components/form_elements/CustomRadio/CustomRadio";
 import TextField from "../components/form_elements/TextField/TextField";
 // import NumberSelector from "../components/form_elements/NumberSelector/NumberSelector";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import type { RootState } from "../app/store";
 import cashIcon from "../assets/cash-svg.svg";
@@ -14,6 +14,7 @@ import type { Cart } from "../types/cartType";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { toast } from "react-toastify";
+import { clearCart } from "../slices/cartSlice";
 
 type FormData = {
   name: string;
@@ -33,6 +34,7 @@ const Checkout: React.FC = () => {
   const shipping = 50;
 
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const cartData = useSelector((state: RootState) => state.cart);
   const [newOrderId, setNewOrderId] = useState("");
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
@@ -120,6 +122,7 @@ const Checkout: React.FC = () => {
       }
       const id = await handleCheckout();
       setNewOrderId(id || "");
+      dispatch(clearCart())
       setShowSuccess(true);
       // proceed with payment logic or navigation
     } else {
