@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 const OrderDetails = () => {
   const { orderId } = useParams<{ orderId: string }>();
@@ -69,6 +70,7 @@ const OrderDetails = () => {
           <p className="font-bold">Grand Total: ₦{order.grandTotal}</p>
         </div>
       </section>
+      <Footer/>
     </div>
   );
 };

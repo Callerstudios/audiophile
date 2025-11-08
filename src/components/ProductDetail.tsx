@@ -22,7 +22,7 @@ const ProductDetail: React.FC<ProductProps> = ({
   const screen = useScreenSize();
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col md:flex-row text-center gap-5 md:gap-20 w-full justify-between items-center">
+    <div className="flex flex-col md:flex-row text-center gap-5 md:gap-10 lg:gap-20 w-full justify-between items-center">
       <img
         src={image}
         alt=""

@@ -1,4 +1,5 @@
 import type React from "react";
+import LoadingCircle from "./LoadingCircle/LoadingCircle";
 
 type ButtonProps = {
   content: string;
@@ -6,6 +7,7 @@ type ButtonProps = {
   type: "primary" | "secondary" | "black";
   stretch?: boolean;
   onClick: () => void;
+  loading?: boolean;
 };
 const Button1: React.FC<ButtonProps> = ({
   content,
@@ -13,6 +15,7 @@ const Button1: React.FC<ButtonProps> = ({
   onClick,
   center,
   stretch,
+  loading,
 }) => {
   const styles: Record<ButtonProps["type"], string> = {
     primary: "bg-brown-1 hover:bg-brown-2 text-white",
@@ -22,15 +25,19 @@ const Button1: React.FC<ButtonProps> = ({
   };
   return (
     <div
-      className={`${stretch ? "w-full" : "w-40"} h-12 cursor-pointer ${center ? "mx-auto" : ""}
+      className={`${stretch ? "w-full" : "w-40"} h-12 cursor-pointer py-3 ${center ? "mx-auto" : ""}
          flex justify-center items-center ${styles[type]}`}
       onClick={onClick}
     >
-      <small
-        className={`font-bold w-full h-full uppercase flex items-center justify-center`}
-      >
-        {content}
-      </small>
+      {loading ? (
+        <LoadingCircle />
+      ) : (
+        <small
+          className={`font-bold w-full h-full uppercase flex items-center justify-center`}
+        >
+          {content}
+        </small>
+      )}
     </div>
   );
 };

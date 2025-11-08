@@ -34,14 +34,16 @@ const Checkout: React.FC = () => {
   const shipping = 50;
 
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const cartData = useSelector((state: RootState) => state.cart);
   const [newOrderId, setNewOrderId] = useState("");
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
     {}
   );
+  const [loading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [grandTotal, setGrandTotal] = useState(0);
+  const [firstSubmission, setFirstSubmission] = useState(true);
   const vat = (grandTotal - shipping) * 0.12;
 
   const [formData, setFormData] = useState<FormData>({
@@ -114,24 +116,34 @@ const Checkout: React.FC = () => {
     return Object.keys(newErrors).length === 0; // ✅ returns true if valid
   };
   const handleSubmit = async (_grandTotal: number) => {
-    setGrandTotal(_grandTotal);
-    if (validateForm()) {
-      if (cartData.length <= 0) {
-        toast.warning("Add ietems to cart first");
-        return;
+    try {
+      setFirstSubmission(false)
+      setIsLoading(true);
+      setGrandTotal(_grandTotal);
+      if (validateForm()) {
+        if (cartData.length <= 0) {
+          toast.warning("Add ietems to cart first");
+          return;
+        }
+        const id = await handleCheckout();
+        setNewOrderId(id || "");
+        dispatch(clearCart());
+        setShowSuccess(true);
+        // proceed with payment logic or navigation
+      } else {
+        toast.error("Invalid Form");
       }
-      const id = await handleCheckout();
-      setNewOrderId(id || "");
-      dispatch(clearCart())
-      setShowSuccess(true);
-      // proceed with payment logic or navigation
-    } else {
-      toast.error("Invalid Form");
+    } catch {
+      toast.error("An Error Occured whilw making the order");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleChange = (field: keyof FormData, value: string | number) => {
-    validateForm();
+    if (!firstSubmission) {
+      validateForm();
+    }
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -272,7 +284,11 @@ const Checkout: React.FC = () => {
         {/* Summary Section */}
         <div className="bg-white rounded-lg p-6 h-fit w-full md:w-1/3">
           <div className="flex flex-col gap-4 mb-4">
-            <CartPreview items={cartData} handleSubmit={handleSubmit} />
+            <CartPreview
+              items={cartData}
+              handleSubmit={handleSubmit}
+              loading={loading}
+            />
           </div>
         </div>
       </div>
@@ -293,10 +309,15 @@ export default Checkout;
 
 type CartPreviewProps = {
   items: Cart[];
+  loading: boolean;
   handleSubmit: (grandTotal: number) => void;
 };
 
-const CartPreview: React.FC<CartPreviewProps> = ({ items, handleSubmit }) => {
+const CartPreview: React.FC<CartPreviewProps> = ({
+  items,
+  handleSubmit,
+  loading,
+}) => {
   const totalPrice = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
   const shipping = 50;
   const vat = totalPrice * 0.12;
@@ -348,6 +369,7 @@ const CartPreview: React.FC<CartPreviewProps> = ({ items, handleSubmit }) => {
         content="Continue"
         type="primary"
         onClick={() => handleSubmit(grandTotal)}
+        loading={loading}
       />
     </div>
   );

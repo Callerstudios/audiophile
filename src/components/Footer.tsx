@@ -6,6 +6,12 @@ import twitterIcon from "../assets/shared/desktop/icon-twitter.svg"
 import instagramIcon from "../assets/shared/desktop/icon-instagram.svg"
 
 const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   return (
     <footer className="px-[10%] py-10 bg-black flex flex-col gap-10">
       <div className="flex flex-col gap-5 items-center md:flex-row justify-between">
@@ -14,24 +20,28 @@ const Footer = () => {
           <NavLink
             to={ROUTES.HOME}
             className={({ isActive }) => (isActive ? "text-xs" : "text-xs")}
-          >
+            onClick={scrollToTop}
+            >
             HOME
           </NavLink>
           <NavLink
             to={ROUTES.HEADPHONES}
             className={({ isActive }) => (isActive ? "text-xs" : "text-xs")}
-          >
+            onClick={scrollToTop}
+            >
             HEADPHONES
           </NavLink>
           <NavLink
             to={ROUTES.SPEAKERS}
             className={({ isActive }) => (isActive ? "text-xs" : "text-xs")}
-          >
+            onClick={scrollToTop}
+            >
             SPEAKERS
           </NavLink>
           <NavLink
             to={ROUTES.EARPHONES}
             className={({ isActive }) => (isActive ? "text-xs" : "text-xs")}
+            onClick={scrollToTop}
           >
             EARPHONES
           </NavLink>
