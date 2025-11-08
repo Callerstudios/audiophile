@@ -1,19 +1,31 @@
 import { BrowserRouter, useRoutes } from "react-router-dom";
 import "./App.css";
 import routes from "./routes";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RoutesWrapper = () => {
   return useRoutes(routes);
 };
 
 function App() {
-  // const tasks = useQuery(api.tasks.get)
   return (
     <>
-      {/* {tasks ? tasks.map((t)=>t.text):"No Tasks"} */}
       <BrowserRouter>
         <RoutesWrapper />
       </BrowserRouter>
+
+      {/* Toast container goes here — outside the router but inside App */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="light"
+      />
     </>
   );
 }

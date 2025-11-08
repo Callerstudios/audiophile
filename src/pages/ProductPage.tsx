@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import NumberSelector from "../components/form_elements/NumberSelector/NumberSelector";
 import ROUTES from "../constants/routesNames";
 import { useScreenSize } from "../hooks/useScreenSize";
+import { toast } from "react-toastify";
 
 const ProductPage = () => {
   const cartData = useSelector((state: RootState) => state.cart);
@@ -74,6 +75,8 @@ const ProductPage = () => {
         })
       );
     }
+    toast.success(`${count} ${count > 1 ? "items" : "item"} added to cart`);
+    // setCount(1);
   };
 
   return (
@@ -177,7 +180,10 @@ type CartPreviewProps = {
   closeCart: () => void;
 };
 
-export const CartPreview: React.FC<CartPreviewProps> = ({ items, closeCart }) => {
+export const CartPreview: React.FC<CartPreviewProps> = ({
+  items,
+  closeCart,
+}) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const totalPrice = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
@@ -185,60 +191,68 @@ export const CartPreview: React.FC<CartPreviewProps> = ({ items, closeCart }) =>
     dispatch(clearCart());
     closeCart();
   };
-  if(items.length <= 0)
   return (
     <div
       className="fixed inset-0 bg-black/50 bg-opacity-50 flex justify-center items-center z-50 px-[10%]"
       onClick={closeCart}
     >
-      <div
-        className="bg-white rounded-lg shadow-lg p-6 w-[350px] ml-auto flex flex-col gap-5"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex flex-row justify-between">
-          <h6 className="text-lg font-bold mb-4">Cart ({items.length})</h6>
-          <p className="opacity-50 cursor-pointer" onClick={clearUserCart}>
-            Remove all
-          </p>
-        </div>
-        <div className="flex flex-col gap-5">
-          {items.map((i) => (
-            <div className="flex flex-row gap-2 items-center">
-              <img
-                className="max-w-16 rounded-xl"
-                src={i.imageUrl}
-                alt={i.productName}
-              />
-              <div className="flex-2">
-                <p>{i.productName}</p>
-                <p className="opacity-50">${i.price}</p>
-              </div>
-              <NumberSelector
-                onChange={(val) => {
-                  dispatch(
-                    changeCountToBuy({
-                      ...i,
-                      quantity: val,
-                    })
-                  );
-                }}
-                value={i.quantity}
-              />
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-row justify-between">
-          <p className="opacity-50">TOTAL</p>
-          <p className="bold">${totalPrice}</p>
-        </div>
-
-        <button
-          className="mt-4 bg-brown-1 text-white w-full py-2 rounded cursor-pointer"
-          onClick={() => navigate(ROUTES.CHECKOUT)}
+      {items.length <= 0 ? (
+        <div
+          className="bg-white rounded-lg shadow-lg p-6 w-[350px] ml-auto flex flex-col gap-5 min-h-30"
+          onClick={(e) => e.stopPropagation()}
         >
-          CHECKOUT
-        </button>
-      </div>
+          No Items in the cart yet
+        </div>
+      ) : (
+        <div
+          className="bg-white rounded-lg shadow-lg p-6 w-[350px] ml-auto flex flex-col gap-5"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="flex flex-row justify-between">
+            <h6 className="text-lg font-bold mb-4">Cart ({items.length})</h6>
+            <p className="opacity-50 cursor-pointer" onClick={clearUserCart}>
+              Remove all
+            </p>
+          </div>
+          <div className="flex flex-col gap-5">
+            {items.map((i) => (
+              <div className="flex flex-row gap-2 items-center">
+                <img
+                  className="max-w-16 rounded-xl"
+                  src={i.imageUrl}
+                  alt={i.productName}
+                />
+                <div className="flex-2">
+                  <p>{i.productName}</p>
+                  <p className="opacity-50">${i.price}</p>
+                </div>
+                <NumberSelector
+                  onChange={(val) => {
+                    dispatch(
+                      changeCountToBuy({
+                        ...i,
+                        quantity: val,
+                      })
+                    );
+                  }}
+                  value={i.quantity}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-row justify-between">
+            <p className="opacity-50">TOTAL</p>
+            <p className="bold">${totalPrice}</p>
+          </div>
+
+          <button
+            className="mt-4 bg-brown-1 text-white w-full py-2 rounded cursor-pointer"
+            onClick={() => navigate(ROUTES.CHECKOUT)}
+          >
+            CHECKOUT
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -13,6 +13,7 @@ import OrderSuccessModal from "../components/OrderSuccessModal";
 import type { Cart } from "../types/cartType";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { toast } from "react-toastify";
 
 type FormData = {
   name: string;
@@ -30,7 +31,7 @@ type FormData = {
 const Checkout: React.FC = () => {
   const createOrder = useMutation(api.orders.createOrder);
   const shipping = 50;
-  
+
   const navigate = useNavigate();
   const cartData = useSelector((state: RootState) => state.cart);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
@@ -115,11 +116,12 @@ const Checkout: React.FC = () => {
       setShowSuccess(true);
       // proceed with payment logic or navigation
     } else {
-      alert("Form invalid ❌");
+      toast.error("Invalid Form");
     }
   };
 
   const handleChange = (field: keyof FormData, value: string | number) => {
+    validateForm();
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -243,15 +245,17 @@ const Checkout: React.FC = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-row gap-5">
-              <img src={cashIcon} alt="Cash Icon" />
-              <p>
-                The ‘Cash on Delivery’ option enables you to pay in cash when
-                our delivery courier arrives at your residence. Just make sure
-                your address is correct so that your order will not be
-                cancelled.
-              </p>
-            </div>
+            {formData.paymentMethod === "Cash on Delivery" && (
+              <div className="flex flex-row gap-5">
+                <img src={cashIcon} alt="Cash Icon" />
+                <p>
+                  The ‘Cash on Delivery’ option enables you to pay in cash when
+                  our delivery courier arrives at your residence. Just make sure
+                  your address is correct so that your order will not be
+                  cancelled.
+                </p>
+              </div>
+            )}
           </section>
         </div>
 
