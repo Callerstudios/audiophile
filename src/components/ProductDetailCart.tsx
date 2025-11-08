@@ -38,7 +38,7 @@ const ProductDetailCart: React.FC<ProductProps> = ({
         <h2>{productName}</h2>
         <p className="opacity-50">{details}</p>
         <h6>${price}</h6>
-        <div className="flex flex-row gap-5 w-full justify-between">
+        <div className="flex flex-row gap-5 w-full">
           <NumberSelector
             onChange={(val) => {
               setCount(val);
