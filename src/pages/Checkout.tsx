@@ -148,18 +148,17 @@ const Checkout: React.FC = () => {
   };
 
   return (
-    <main className="flex flex-col gap-10 bg-gray-50">
+    <main className="flex flex-col gap-5 bg-gray-50">
       <NavBar noBorder />
+      <button
+        className="text-sm text-gray-500 hover:underline self-start mx-[10%]"
+        onClick={() => navigate(-1)}
+      >
+        Go Back
+      </button>
       <div className="min-h-screen px-[10%] bg-gray-50 py-10 flex flex-col md:flex-row gap-8 justify-center">
         {/* Checkout Form */}
         <div className="bg-white rounded-lg p-6 w-full md:w-2/3">
-          <button
-            className="text-sm text-gray-500 mb-4 hover:underline"
-            onClick={() => navigate(-1)}
-          >
-            Go Back
-          </button>
-
           <h3 className="text-2xl font-semibold mb-6">CHECKOUT</h3>
 
           {/* Billing Details */}

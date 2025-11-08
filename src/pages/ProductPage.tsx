@@ -37,6 +37,12 @@ const ProductPage = () => {
       }
     }
   }, [cartData, data]);
+  useEffect(()=>{
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [])
   // useEffect(() => {
   //   if (showCart) {
   //     document.body.style.overflowY = "hidden";
