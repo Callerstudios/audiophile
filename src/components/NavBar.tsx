@@ -5,16 +5,27 @@ import { NavLink } from "react-router";
 import ROUTES from "../constants/routesNames";
 import hamburgerIcon from "../assets/hamburger.svg";
 import closeIcon from "../assets/close.svg"; // 🧩 add a close icon
+import { CartPreview } from "../pages/ProductPage";
+import { useSelector } from "react-redux";
+import type { RootState } from "../app/store";
 
 type NavBarProps = {
   noBorder?: boolean;
+  noBg?: boolean;
 };
 
-const NavBar: React.FC<NavBarProps> = ({ noBorder }) => {
+const NavBar: React.FC<NavBarProps> = ({ noBorder, noBg }) => {
+  const cartData = useSelector((state: RootState) => state.cart);
+  const [showCart, setShowCart] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="md:px-[10%] h-20 bg-black w-full max-w-full relative">
+    <div
+      className={`md:px-[10%] h-20 ${noBg ? "bg-transparent" : "bg-black"} w-full max-w-full relative`}
+    >
+      {showCart && (
+        <CartPreview items={cartData} closeCart={() => setShowCart(false)} />
+      )}
       <div
         className={`${!noBorder ? "border-b border-white" : ""} px-[5%] md:px-0 flex justify-between items-center h-full`}
       >
@@ -68,7 +79,19 @@ const NavBar: React.FC<NavBarProps> = ({ noBorder }) => {
         </nav>
 
         {/* Right: Cart */}
-        <img src={cartImage} alt="Cart" className="w-6 h-6 cursor-pointer" />
+        <div className="w-10 h-10 cursor-pointer relative flex flex-row justify-center items-center ">
+          {cartData.length > 0 && (
+            <div className="bg-brown-1 w-6 h-6 text-center  rounded-full text-white absolute -right-2 -top-2">
+              {cartData.length}
+            </div>
+          )}
+          <img
+            src={cartImage}
+            alt="Cart"
+            className=""
+            onClick={() => setShowCart(true)}
+          />
+        </div>
       </div>
 
       {/* Mobile Menu */}

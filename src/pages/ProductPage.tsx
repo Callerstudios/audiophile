@@ -23,7 +23,7 @@ const ProductPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { productId } = useParams();
   const [count, setCount] = useState(1);
-  const [showCart, setShowCart] = useState(false);
+  // const [showCart, setShowCart] = useState(false);
   const navigate = useNavigate();
   const screenType = useScreenSize();
   const data = db.data.find((d) => d.id === Number(productId));
@@ -36,22 +36,22 @@ const ProductPage = () => {
       }
     }
   }, [cartData, data]);
-  useEffect(() => {
-    if (showCart) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = "auto";
-    }
-    return () => {
-      document.body.style.overflowY = "auto";
-    };
-  }, [showCart]);
+  // useEffect(() => {
+  //   if (showCart) {
+  //     document.body.style.overflowY = "hidden";
+  //   } else {
+  //     document.body.style.overflowY = "auto";
+  //   }
+  //   return () => {
+  //     document.body.style.overflowY = "auto";
+  //   };
+  // }, [showCart]);
 
   if (!data) {
     return <h1>No Data</h1>;
   }
   const itemAdded = () => {
-    setShowCart(true);
+    // setShowCart(true);
     const product = cartData.find((c) => c.productId === String(data.id));
     if (product) {
       dispatch(
@@ -80,9 +80,9 @@ const ProductPage = () => {
     <div>
       <NavBar noBorder={true} />
       <main className="relative">
-        {showCart && (
+        {/* {showCart && (
           <CartPreview items={cartData} closeCart={() => setShowCart(false)} />
-        )}
+        )} */}
         <section className="px-[10%] mt-20">
           <p
             className="opacity-50 mb-5 cursor-pointer"
@@ -138,7 +138,7 @@ const ProductPage = () => {
             </div>
           </div>
 
-          <div className="basis-1/2 min-h-92 bg-red-500  md:h-full overflow-hidden rounded-lg">
+          <div className="basis-1/2 -500  md:h-full overflow-hidden rounded-lg">
             <img
               src={data.gallery.third[screenType]}
               alt="Gallery"
@@ -177,7 +177,7 @@ type CartPreviewProps = {
   closeCart: () => void;
 };
 
-const CartPreview: React.FC<CartPreviewProps> = ({ items, closeCart }) => {
+export const CartPreview: React.FC<CartPreviewProps> = ({ items, closeCart }) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const totalPrice = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
@@ -185,6 +185,7 @@ const CartPreview: React.FC<CartPreviewProps> = ({ items, closeCart }) => {
     dispatch(clearCart());
     closeCart();
   };
+  if(items.length <= 0)
   return (
     <div
       className="fixed inset-0 bg-black/50 bg-opacity-50 flex justify-center items-center z-50 px-[10%]"

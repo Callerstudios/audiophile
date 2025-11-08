@@ -8,9 +8,9 @@ type ProductProps = {
   isNew?: boolean;
   imageRight?: boolean;
   price: number;
-  onAddToCart: (amount: number )=> void
-  count: number
-  setCount: (val: number)=>void
+  onAddToCart: (amount: number) => void;
+  count: number;
+  setCount: (val: number) => void;
 };
 
 const ProductDetailCart: React.FC<ProductProps> = ({
@@ -20,9 +20,10 @@ const ProductDetailCart: React.FC<ProductProps> = ({
   isNew,
   imageRight = false,
   price,
-  onAddToCart, count, setCount
+  onAddToCart,
+  count,
+  setCount,
 }) => {
-  
   return (
     <div className="flex flex-col md:flex-row gap-10 md:gap-20 w-full justify-between items-center">
       <img
@@ -47,17 +48,14 @@ const ProductDetailCart: React.FC<ProductProps> = ({
           <Button1
             content="add to cart"
             onClick={() => {
-              onAddToCart(count)
+              onAddToCart(count);
             }}
             type="primary"
           />
         </div>
       </div>
-      
     </div>
   );
 };
 
 export default ProductDetailCart;
-
-

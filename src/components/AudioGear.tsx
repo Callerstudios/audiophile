@@ -5,7 +5,7 @@ const AudioGear = () => {
   return (
     <div className="flex flex-col max-w-full gap-5 md:max-w-full lg:flex-row px-[10%] justify-between items-center my-30">
       <div
-        className={`md:max-w-102 flex flex-col gap-10 ${screen === "mobile" ? "order-2" : ""}`}
+        className={`md:max-w-102 flex flex-col gap-5 ${screen === "mobile" ? "order-2" : ""}`}
       >
         <h2 style={{ fontSize: screen === "mobile" ? "28px" : "" }}>
           Bringing you the <span className="text-brown-1">best</span> audio gear

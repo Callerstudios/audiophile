@@ -14,7 +14,7 @@ const Hero = () => {
       className={`${styles.hero} bg-cover bg-no-repeat w-full aspect-video pb-20`}
       style={{ backgroundImage: `url(${bgUrl})` }}
     >
-      <NavBar />
+      <NavBar noBg />
       <div className="mx-auto md:mx-[10%] mt-30 flex flex-col max-w-82 md:max-w-110 gap-3 text-white overflow-x-hiddenf text-center">
         <p className="opacity-50">NEW PRODUCT</p>
         <h1 className="text-4xl md:text-6xl">XX99 Mark II Headphones</h1>
