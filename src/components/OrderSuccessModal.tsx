@@ -6,12 +6,14 @@ import Button1 from "./Button1";
 interface OrderSuccessModalProps {
   items: Cart[];
   total: number;
+  orderId: string;
   onClose: () => void;
 }
 
 const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({
   items,
   total,
+  orderId,
   onClose,
 }) => {
   // const screenType = useScreenSize();
@@ -80,9 +82,33 @@ const OrderSuccessModal: React.FC<OrderSuccessModalProps> = ({
             <p className="text-lg font-semibold">${total.toLocaleString()}</p>
           </div>
         </div>
+        <div>
+          <div style={{ padding: "0 30px 30px", textAlign: "center" }}>
+            <a
+              href={`https://audiophile-sigma-mauve.vercel.app/orders/${orderId}`}
+              style={{
+                display: "inline-block",
+                backgroundColor: "#D87D4A",
+                color: "#ffffff",
+                textDecoration: "none",
+                padding: "14px 32px",
+                borderRadius: "6px",
+                fontSize: "16px",
+                fontWeight: "600",
+              }}
+            >
+              View Your Order
+            </a>
+          </div>
+        </div>
 
         {/* Button */}
-        <Button1 stretch content="back to home"   onClick={onClose} type="primary"/>
+        <Button1
+          stretch
+          content="back to home"
+          onClick={onClose}
+          type="primary"
+        />
       </div>
     </div>
   );

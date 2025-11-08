@@ -34,6 +34,7 @@ const Checkout: React.FC = () => {
 
   const navigate = useNavigate();
   const cartData = useSelector((state: RootState) => state.cart);
+  const [newOrderId, setNewOrderId] = useState("");
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
     {}
   );
@@ -80,7 +81,8 @@ const Checkout: React.FC = () => {
         grandTotal: grandTotal,
       });
 
-      console.log("Order created:", orderId);
+      // console.log("Order created:", orderId);
+      return orderId;
       // Redirect to success page or show confirmation
       // The email will be sent automatically via the action
     } catch (error) {
@@ -112,7 +114,12 @@ const Checkout: React.FC = () => {
   const handleSubmit = async (_grandTotal: number) => {
     setGrandTotal(_grandTotal);
     if (validateForm()) {
-      await handleCheckout();
+      if (cartData.length <= 0) {
+        toast.warning("Add ietems to cart first");
+        return;
+      }
+      const id = await handleCheckout();
+      setNewOrderId(id || "");
       setShowSuccess(true);
       // proceed with payment logic or navigation
     } else {
@@ -269,6 +276,7 @@ const Checkout: React.FC = () => {
       <Footer />
       {showSuccess && (
         <OrderSuccessModal
+          orderId={newOrderId}
           items={cartData}
           onClose={() => setShowSuccess(false)}
           total={grandTotal}

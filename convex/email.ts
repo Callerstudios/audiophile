@@ -140,7 +140,7 @@ function generateOrderEmailHtml(order: {
               
               <!-- Header -->
               <tr>
-                <td style="background-color: #4f46e5; padding: 40px 30px; text-align: center;">
+                <td style="background-color: #D87D4A; padding: 40px 30px; text-align: center;">
                   <h1 style="margin: 0; color: #ffffff; font-size: 28px;">Thank You for Your Order!</h1>
                 </td>
               </tr>
@@ -214,7 +214,7 @@ function generateOrderEmailHtml(order: {
                 <td style="padding: 0 30px 20px;">
                   <h2 style="margin: 0 0 15px; font-size: 20px; color: #111827;">Shipping Details</h2>
                   <div style="background-color: #f9fafb; padding: 15px; border-radius: 6px;">
-                    <p style="margin: 0; font-size: 14px; color: #111827; line-height: 1.8;">
+                    <p style="margin: 0; font-size: 14px; color: #D87D4A; line-height: 1.8;">
                       ${order.shippingAddress.street}<br>
                       ${order.shippingAddress.city}, ${order.shippingAddress.state} ${order.shippingAddress.zipCode}<br>
                       ${order.shippingAddress.country}
@@ -226,7 +226,7 @@ function generateOrderEmailHtml(order: {
               <!-- CTA Button -->
               <tr>
                 <td style="padding: 0 30px 30px; text-align: center;">
-                  <a href="https://audiophile-sigma-mauve.vercel.app/orders/${order.orderId}" style="display: inline-block; background-color: #4f46e5; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-size: 16px; font-weight: 600;">View Your Order</a>
+                  <a href="https://audiophile-sigma-mauve.vercel.app/orders/${order.orderId}" style="display: inline-block; background-color: #D87D4A; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-size: 16px; font-weight: 600;">View Your Order</a>
                 </td>
               </tr>
               
